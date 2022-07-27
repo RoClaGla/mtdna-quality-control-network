@@ -20,7 +20,7 @@ df = read.csv(inputfile, header = T)
 plot.df = df[df$halo == halo,]
 
 p1.1 = ggplot(data = plot.df)+
-  geom_line(aes(x = rho, y = mh, col = as.factor(t)))+
+  geom_point(aes(x = rho, y = mh, col = as.factor(t)))+
   facet_wrap(~nseed)
   
   filename = paste("test-",ifelse(halo>0,yes = "repel-",""),".png",sep = "")
