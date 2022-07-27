@@ -1,15 +1,15 @@
 #!usr/bin/env Rscript
 
-cat("Loading libraries...")
+cat("Loading libraries...\n")
 library(ggplot2)
 library(gridExtra)
 
 args = commandArgs(trailingOnly = T)
 
-cat("Processing inputs...")
+cat("Processing inputs...\n")
 
 if(length(args)<2){
-  stop("Need input file and repulsive halo (nonrepulsive = 0) !")
+  stop("Need input file and repulsive halo (nonrepulsive = 0)!\n")
 }
 
 inputfile = args[1]
