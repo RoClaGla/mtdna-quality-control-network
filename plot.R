@@ -31,8 +31,24 @@ p1.3 = ggplot(data = plot.df.3)+
   geom_line(aes(x = rho, y = mh, col = as.factor(t)))+
   facet_wrap(~nseed)
   
-  filename = paste("test-",ifelse(halo>0,yes = "repel-",""),".png",sep = "")
+  filename = paste("mh-",ifelse(halo>0,yes = "repel-",""),".png",sep = "")
   res.factor = 3
   png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
   grid.arrange(p1.1,p1.2,p1.3,nrow = 3)
+  dev.off()
+
+p2.1 = ggplot(data = plot.df.1)+
+  geom_line(aes(x = rho, y = vh, col = as.factor(t)))+
+  facet_wrap(~nseed)
+p2.2 = ggplot(data = plot.df.2)+
+  geom_line(aes(x = rho, y = vh, col = as.factor(t)))+
+  facet_wrap(~nseed)
+p2.3 = ggplot(data = plot.df.3)+
+  geom_line(aes(x = rho, y = vh, col = as.factor(t)))+
+  facet_wrap(~nseed)
+  
+  filename = paste("vh-",ifelse(halo>0,yes = "repel-",""),".png",sep = "")
+  res.factor = 3
+  png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
+  grid.arrange(p2.1,p2.2,p2.3,nrow = 3)
   dev.off()
