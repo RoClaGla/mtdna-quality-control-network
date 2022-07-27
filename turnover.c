@@ -739,10 +739,10 @@ int main(int argc, char *argv[]){
                 computeStats(S,&Ss,nsims);
                 // double the population (simplest implementation for now)
                 // for later: chose if the network remains equally heterogeneous throughout, or if we randomly draw heterogeneity of network
-                n = 2*((int)(Ss.mwc+Ss.mmc+Ss.mwn+Ss.mmn));
                 // bump to output file
-                fprintf(fp,"%.2f,%i,%i,%.2f,%.2f,%.2f,%.2f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f,%i\n",h,n,nseed,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd,t);
+                fprintf(fp,"%.2f,%i,%i,%i,%.2f,%.2f,%.2f,%.2f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,t,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
                 fflush(fp);
+								n = 2*((int)(Ss.mwc+Ss.mmc+Ss.mwn+Ss.mmn));
                 printf("Should print!\n");
               }
             }
