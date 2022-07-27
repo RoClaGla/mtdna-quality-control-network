@@ -420,7 +420,7 @@ int getProxDNA(double rho, double *mx, double *my, int *mt, int *mnetworked, int
 }
 
 // function to go through k "cell cycles": "fragment" network, do turnover, "refuse" (identical network for now)
-int Cycle(double *mx, double *my, double *mt, int n, int K, double rho, double mut_rate, double to_rate){
+int Cycle(double *mx, double *my, int *mt, int n, int K, double rho, double mut_rate, double to_rate){
 	int i,j,k;
 	int turnover;
 	
