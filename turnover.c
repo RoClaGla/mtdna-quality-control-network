@@ -18,7 +18,7 @@ typedef struct{
 // structure to store stats from distinct simulations
 typedef struct{
 	double wc, mc, wn, mn;
-	double t, d, het, pnet, pcyt;
+	double u, d, het, pnet, pcyt;
 } Stats;
 
 // simple function returning max(a,b)
@@ -625,6 +625,7 @@ int main(int argc, char *argv[]){
 	double het, mhet, vhet, proxnet,proxcyt,vproxnet,vproxcyt;
 	double mwc, mmc, mwn, mmn,vwc,vmc,vwn,vmn,t,u;
 	double mprop, vprop, mmind, vmind;
+	double mut_rate, to_rate, tmax; // mutation and turnover rates; maximal number of "cycles" of turnover/mtDNA mutation before cell division
 	Stats *S;
 	SumStats Ss;
   int error, nsims, nsim, n, nseed, nsegs, output, notdoneyet, K;
@@ -668,6 +669,10 @@ int main(int argc, char *argv[]){
     printf("./network.ce --simulate [nsims] [nseed] [seglength] [branchprob]\n");
     exit(0);
   }
+	
+	mut_rate = 0.05;
+	to_rate  = 0.05;
+	tmax = 10;
   
   xs = (double *)malloc(sizeof(double)*MAXN);
   ys = (double *)malloc(sizeof(double)*MAXN);
@@ -710,6 +715,8 @@ int main(int argc, char *argv[]){
                     BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,&nsegs,&actual_mass);
                     notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
                   }
+									// turnover according to parameterisation and number of turnover occasions:
+									Cycle(mx,my,mt,n,t,rho,mut_rate,to_rate);
                   // get DNA stats
                   getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
                   // fix so that all functions below are called, pass Stats directly to getStats
