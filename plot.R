@@ -8,15 +8,18 @@ args = commandArgs(trailingOnly = T)
 
 cat("Processing inputs...")
 
-if(length(args)<){
-  stop("Need input file")
+if(length(args)<1){
+  stop("Need input file and repulsive halo (nonrepulsive = 0) !")
 }
 
 inputfile = args[1]
+halo = args[2]
 
 df = read.csv(inputfile)
 
-p1.1 = ggplot(data = df)+
+plot.df = df[df$halo == halo,]
+
+p1.1 = ggplot(data = plot.df)+
   geom_line(aes(x = rho, y = mh, col = t))+
   facet_wrap(~nseed)
   
