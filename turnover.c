@@ -623,10 +623,10 @@ int main(int argc, char *argv[]){
 	double mproxnet, mproxcyt;
 	int wc,mc,wn,mn;
 	double het, mhet, vhet, proxnet,proxcyt,vproxnet,vproxcyt;
-	double mwc, mmc, mwn, mmn,vwc,vmc,vwn,vmn,t,u;
+	double mwc, mmc, mwn, mmn,vwc,vmc,vwn,vmn,u;
 	double mprop, vprop, mmind, vmind;
 	double mut_rate, to_rate; // mutation and turnover rates; 
-	int tmax; // maximal number of "cycles" of turnover/mtDNA mutation before cell division
+	int t,tmax; // maximal number of "cycles" of turnover/mtDNA mutation before cell division
 	Stats *S;
 	SumStats Ss;
   int error, nsims, nsim, n, nseed, nsegs, output, notdoneyet, K;
