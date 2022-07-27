@@ -673,7 +673,7 @@ int main(int argc, char *argv[]){
 	
 	mut_rate = 0.05;
 	to_rate  = 0.05;
-	tmax = 10;
+	tmax = 5;
   
   xs = (double *)malloc(sizeof(double)*MAXN);
   ys = (double *)malloc(sizeof(double)*MAXN);
