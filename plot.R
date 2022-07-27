@@ -13,9 +13,9 @@ if(length(args)<2){
 }
 
 inputfile = args[1]
-halo = args[2]
+halo = as.numeric(args[2])
 
-df = read.csv(inputfile)
+df = read.csv(inputfile, header = T)
 
 plot.df = df[df$halo == halo,]
 
