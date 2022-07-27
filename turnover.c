@@ -699,7 +699,7 @@ int main(int argc, char *argv[]){
   }else{		
 		sprintf(str,"output-%i-%.2f.csv",n,h);
     fp = fopen(str,"w");
-    fprintf(fp,"h,n,nseed,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
+    fprintf(fp,"h,n,nseed,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd,t\n");
     for(nseed=4;nseed<=64;nseed*=4){
       for(p=0.0;p<=1.0;p+=0.1){
         for(q=0.0;q<=1.0;q+=0.1){
