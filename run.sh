@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gcc -o3 turnover.c -lm -o network.ce
+gcc -o3 turnover.c -lm -o turnover.ce
 
 # Parameters: [mode] [nsims] [mass] [seglength] [branchprob] [het] [pop] ([nseed] [halo] [p] [q] [rho] [clustersize])
 # If mode is --snapshots, one must also pass [nseed] [halo] [p] [q] and [rho] [clustersize]
