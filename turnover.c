@@ -446,8 +446,7 @@ int Cycle(double *mx, double *my, int *mt, int *mnetworked, int n, int K, double
 		// for each wildtype, chance of becoming mutant if not in the network (supposing it needs more work when not complemented by other mtDNA)
 		for(i=0;i<n;i++){
 			if(mt[i] == 0 && RND<mut_rate && mnetworked[i] == 0){
-					mt[i] = 1;
-				}
+				mt[i] = 1;
 			}
 		}
 	}
