@@ -420,7 +420,7 @@ int getProxDNA(double rho, double *mx, double *my, int *mt, int *mnetworked, int
 }
 
 // function to go through k "cell cycles": "fragment" network, do turnover, "refuse" (identical network for now)
-int Cycle(double *mx, double *my, int *mt, int n, int K, double rho, double mut_rate, double to_rate){
+int Cycle(double *mx, double *my, int *mt, int *mnetworked, int n, int K, double rho, double mut_rate, double to_rate){
 	int i,j,k;
 	int turnover;
 	
@@ -716,7 +716,7 @@ int main(int argc, char *argv[]){
                     notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
                   }
 									// turnover according to parameterisation and number of turnover occasions:
-									Cycle(mx,my,mt,n,t,rho,mut_rate,to_rate);
+									Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
                   // get DNA stats
                   getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
                   // fix so that all functions below are called, pass Stats directly to getStats
