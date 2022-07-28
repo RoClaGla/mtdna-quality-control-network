@@ -670,8 +670,8 @@ int main(int argc, char *argv[]){
     exit(0);
   }
 	
-	mut_rate = 0.05;
-	to_rate  = 0.05;
+	mut_rate = 0.025;
+	to_rate  = 0.01;
 	tmax = 5;
   
   xs = (double *)malloc(sizeof(double)*MAXN);
@@ -704,7 +704,7 @@ int main(int argc, char *argv[]){
       for(p=0.0;p<=1.0;p+=0.1){
         for(q=0.0;q<=1.0;q+=0.1){
           for(halo=0;halo<=0.1;halo+=0.1){
-            for(rho=0.0;rho<=0.25;rho+=0.05){
+            for(rho=0.025;rho<=0.25;rho+=0.025){
               for(t=0;t<tmax;t++){
                 nsim = 0;
                 while(nsim<nsims){
