@@ -696,7 +696,7 @@ int main(int argc, char *argv[]){
   }else{		
 		sprintf(str,"output-%i-%.2f.csv",n,h);
     fp = fopen(str,"w");
-    fprintf(fp,"h,n,nseed,t,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
+    fprintf(fp,"h,n,nseed,t,to_rate,mut_rate,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(nseed=4;nseed<=64;nseed*=4){
       for(p=0.0;p<=1.0;p+=0.1){
         for(q=0.0;q<=1.0;q+=0.1){
@@ -738,7 +738,7 @@ int main(int argc, char *argv[]){
 										// double the population (simplest implementation for now)
 										// for later: chose if the network remains equally heterogeneous throughout, or if we randomly draw heterogeneity of network
 										// bump to output file
-										fprintf(fp,"%.2f,%i,%i,%i,%.2f,%.2f,%.2f,%.2f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,t,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
+										fprintf(fp,"%.2f,%i,%i,%i,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,t,to_rate,mut_rate,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
 										fflush(fp);
 										printf("Should print!\n");
 									}
