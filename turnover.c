@@ -701,7 +701,7 @@ int main(int argc, char *argv[]){
       for(p=0.0;p<=1.0;p+=0.1){
         for(q=0.0;q<=1.0;q+=0.1){
           for(halo=0;halo<=0.1;halo+=0.1){
-            for(rho=0.025;rho<=0.25;rho+=0.025){
+            for(rho=0.025;rho<=0.1;rho+=0.025){
 							for(mut_rate=0.01;mut_rate<0.10;mut_rate+=0.01){
 								for(to_rate=0.01;to_rate<0.10;to_rate+=0.01){
 									for(t=0;t<tmax;t++){
