@@ -30,7 +30,7 @@ p1.3 = ggplot(data = plot.df.3)+
   geom_tile(aes(x = p, y = q, fill = vh))+
   facet_wrap(to_rate~nseed)
   
-filename = paste("mh-",ifelse(halo>0,yes = "repel-",""),".png",sep = "")
+filename = paste("vh-",ifelse(halo>0,yes = "repel-",""),".png",sep = "")
 res.factor = 3
 png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
 grid.arrange(p1.1,p1.2,p1.3,nrow = 3)
