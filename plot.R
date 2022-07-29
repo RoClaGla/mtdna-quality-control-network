@@ -29,13 +29,13 @@ vhmax = max(max(plot.df.1$vh),max(plot.df.2$vh),max(plot.df.3$vh))
 bl = h*(1-h)/n
 fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,bl/(2*vhmax),bl/vhmax,3*bl/(2*vhmax),1), limits = c(0,vhmax))
 
-p1.1 = ggplot(data = plot.df.1)+fn+
+p1.1 = ggplot(data = plot.df.1)+#fn+
   geom_tile(aes(x = p, y = q, fill = vh))+
   facet_wrap(to_rate~nseed)
-p1.2 = ggplot(data = plot.df.2)+fn+
+p1.2 = ggplot(data = plot.df.2)+#fn+
   geom_tile(aes(x = p, y = q, fill = vh))+
   facet_wrap(to_rate~nseed)
-p1.3 = ggplot(data = plot.df.3)+fn+
+p1.3 = ggplot(data = plot.df.3)+#fn+
   geom_tile(aes(x = p, y = q, fill = vh))+
   facet_wrap(to_rate~nseed)
   
