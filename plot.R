@@ -24,8 +24,8 @@ plot.df.1 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RA
 plot.df.2 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[2] & df$to_rate == TO_RATE[2],]
 plot.df.3 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[3] & df$to_rate == TO_RATE[3],]
 
-vhmax = 
-baseline = 1/n
+vhmax = max(max(plot.df.1$vh),max(plot.df.2$vh),max(plot.df.3$vh))
+bl = 1/n
 fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,bl/(2*vhmax),bl/vhmax,3*bl/(2*vhmax),1), limits = c(0,vhmax))
 
 p1.1 = ggplot(data = plot.df.1)+fn+
