@@ -8,13 +8,14 @@ args = commandArgs(trailingOnly = T)
 
 cat("Processing inputs...\n")
 
-if(length(args)<3){
-  stop("Need input file, population size, and repulsive halo (nonrepulsive = 0)!\n")
+if(length(args)<4){
+  stop("Need input file, population size, initial heteroplasmy, and repulsive halo (nonrepulsive = 0)!\n")
 }
 
 inputfile = args[1]
 n = as.numeric(args[2])
-halo = as.numeric(args[3])
+h = as.numeric(args[3])
+halo = as.numeric(args[4])
 
 df = read.csv(inputfile, header = T)
 MUT_RATE = unique(df$mut_rate)
@@ -25,17 +26,17 @@ plot.df.2 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[2] & df$to_rate == TO_RA
 plot.df.3 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[3] & df$to_rate == TO_RATE[3],]
 
 vhmax = max(max(plot.df.1$vh),max(plot.df.2$vh),max(plot.df.3$vh))
-bl = 1/n
-fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,0.1,0.2,0.5,1), limits = c(0,vhmax))
+bl = h*(1-h)/n
+fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,bl/(2*vhmax),bl/vhmax,3*bl/(2*vhmax),1), limits = c(0,vhmax))
 
 p1.1 = ggplot(data = plot.df.1)+fn+
-  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
+  geom_tile(aes(x = p, y = q, fill = vh))+
   facet_wrap(to_rate~nseed)
 p1.2 = ggplot(data = plot.df.2)+fn+
-  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
+  geom_tile(aes(x = p, y = q, fill = vh))+
   facet_wrap(to_rate~nseed)
 p1.3 = ggplot(data = plot.df.3)+fn+
-  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
+  geom_tile(aes(x = p, y = q, fill = vh))+
   facet_wrap(to_rate~nseed)
   
 filename = paste("vh",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
