@@ -26,7 +26,7 @@ plot.df.3 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[3] & df$to_rate == TO_RA
 
 vhmax = 
 baseline = 1/n
-fn = color_scale_gradientn(colors = c("black","blue","white","red","black"), values = c(0,bl/(2*vhmax),bl/vhmax,3*bl/(2*vhmax),1), limits = c(0,vhmax))
+fn = scale_fill_gradientn(colors = c("black","blue","white","red","black"), values = c(0,bl/(2*vhmax),bl/vhmax,3*bl/(2*vhmax),1), limits = c(0,vhmax))
 
 p1.1 = ggplot(data = plot.df.1)+fn+
   geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
