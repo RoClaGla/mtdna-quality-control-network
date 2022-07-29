@@ -8,7 +8,7 @@ args = commandArgs(trailingOnly = T)
 
 cat("Processing inputs...\n")
 
-if(length(args)<2){
+if(length(args)<3){
   stop("Need input file, population size, and repulsive halo (nonrepulsive = 0)!\n")
 }
 
