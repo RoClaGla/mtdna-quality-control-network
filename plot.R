@@ -16,9 +16,12 @@ inputfile = args[1]
 halo = as.numeric(args[2])
 
 df = read.csv(inputfile, header = T)
-plot.df.1 = df[df$rho == 0.01,]
-plot.df.2 = df[df$rho == 0.06,]
-plot.df.3 = df[df$rho == 0.11,]
+MUT_RATE = unique(df$mut_rate)
+TO_RATE = unique(df$to_rate)
+
+plot.df.1 = df[df$rho == 0.06 & df$mut_rate == TO_RATE]
+plot.df.2 = df[df$rho == 0.06 & df$mut_rate == TO_RATE ]
+plot.df.3 = df[df$rho == 0.06 & df$mut_rate == TO_RATE]
 
 p1.1 = ggplot(data = plot.df.1)+
   geom_tile(aes(x = p, y = q, fill = vh))+
