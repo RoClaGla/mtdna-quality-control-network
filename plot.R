@@ -16,10 +16,19 @@ inputfile = args[1]
 halo = as.numeric(args[2])
 
 df = read.csv(inputfile, header = T)
+plot.df.1 = df[df$rho == 0.01,]
+plot.df.2 = df[df$rho == 0.06,]
+plot.df.3 = df[df$rho == 0.11,]
 
-p1.1 = ggplot(data = plot.df)+
-  geom_line(aes(x = p, y = q, col = as.factor(t)))+
-  facet_wrap(rho~nseed)
+p1.1 = ggplot(data = plot.df.1)+
+  geom_tile(aes(x = p, y = q, fill = vh))+
+  facet_wrap(to_rate~nseed)
+p1.2 = ggplot(data = plot.df.2)+
+  geom_tile(aes(x = p, y = q, fill = vh))+
+  facet_wrap(to_rate~nseed)
+p1.3 = ggplot(data = plot.df.3)+
+  geom_tile(aes(x = p, y = q, fill = vh))+
+  facet_wrap(to_rate~nseed)
   
 filename = paste("mh-",ifelse(halo>0,yes = "repel-",""),".png",sep = "")
 res.factor = 3
