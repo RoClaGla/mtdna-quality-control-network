@@ -9,27 +9,32 @@ args = commandArgs(trailingOnly = T)
 cat("Processing inputs...\n")
 
 if(length(args)<2){
-  stop("Need input file and repulsive halo (nonrepulsive = 0)!\n")
+  stop("Need input file, population size, and repulsive halo (nonrepulsive = 0)!\n")
 }
 
 inputfile = args[1]
-halo = as.numeric(args[2])
+n = as.numeric(args[2])
+halo = as.numeric(args[3])
 
 df = read.csv(inputfile, header = T)
 MUT_RATE = unique(df$mut_rate)
 TO_RATE = unique(df$to_rate)
 
-plot.df.1 = df[df$rho == 0.11 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1],]
-plot.df.2 = df[df$rho == 0.11 & df$mut_rate == MUT_RATE[2] & df$to_rate == TO_RATE[2],]
-plot.df.3 = df[df$rho == 0.11 & df$mut_rate == MUT_RATE[3] & df$to_rate == TO_RATE[3],]
+plot.df.1 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1],]
+plot.df.2 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[2] & df$to_rate == TO_RATE[2],]
+plot.df.3 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[3] & df$to_rate == TO_RATE[3],]
 
-p1.1 = ggplot(data = plot.df.1)+
+vhmax = 
+baseline = 1/n
+fn = color_scale_gradientn(colors = c("black","blue","white","red","black"), values = c(0,bl/(2*vhmax),bl/vhmax,3*bl/(2*vhmax),1), limits = c(0,vhmax))
+
+p1.1 = ggplot(data = plot.df.1)+fn+
   geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
   facet_wrap(to_rate~nseed)
-p1.2 = ggplot(data = plot.df.2)+
+p1.2 = ggplot(data = plot.df.2)+fn+
   geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
   facet_wrap(to_rate~nseed)
-p1.3 = ggplot(data = plot.df.3)+
+p1.3 = ggplot(data = plot.df.3)+fn+
   geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
   facet_wrap(to_rate~nseed)
   
