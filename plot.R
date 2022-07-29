@@ -21,9 +21,9 @@ df = read.csv(inputfile, header = T)
 MUT_RATE = unique(df$mut_rate)
 TO_RATE = unique(df$to_rate)
 
-plot.df.1 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1],]
-plot.df.2 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[2] & df$to_rate == TO_RATE[2],]
-plot.df.3 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[3] & df$to_rate == TO_RATE[3],]
+plot.df.1 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[2],]
+plot.df.2 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[2] & df$to_rate == TO_RATE[3],]
+plot.df.3 = df[df$rho == 0.16 & df$mut_rate == MUT_RATE[3] & df$to_rate == TO_RATE[4],]
 
 vhmax = max(max(plot.df.1$vh),max(plot.df.2$vh),max(plot.df.3$vh))
 bl = h*(1-h)/n
