@@ -19,21 +19,21 @@ df = read.csv(inputfile, header = T)
 MUT_RATE = unique(df$mut_rate)
 TO_RATE = unique(df$to_rate)
 
-plot.df.1 = df[df$rho == 0.06 & df$mut_rate == TO_RATE,]
-plot.df.2 = df[df$rho == 0.06 & df$mut_rate == TO_RATE,]
-plot.df.3 = df[df$rho == 0.06 & df$mut_rate == TO_RATE,]
+plot.df.1 = df[df$rho == 0.11 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1],]
+plot.df.2 = df[df$rho == 0.11 & df$mut_rate == MUT_RATE[2] & df$to_rate == TO_RATE[2],]
+plot.df.3 = df[df$rho == 0.11 & df$mut_rate == MUT_RATE[3] & df$to_rate == TO_RATE[3],]
 
 p1.1 = ggplot(data = plot.df.1)+
-  geom_tile(aes(x = p, y = q, fill = vh))+
+  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
   facet_wrap(to_rate~nseed)
 p1.2 = ggplot(data = plot.df.2)+
-  geom_tile(aes(x = p, y = q, fill = vh))+
+  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
   facet_wrap(to_rate~nseed)
 p1.3 = ggplot(data = plot.df.3)+
-  geom_tile(aes(x = p, y = q, fill = vh))+
+  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
   facet_wrap(to_rate~nseed)
   
-filename = paste("vh-",ifelse(halo>0,yes = "repel-",""),".png",sep = "")
+filename = paste("vh",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
 res.factor = 3
 png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
 grid.arrange(p1.1,p1.2,p1.3,nrow = 3)
