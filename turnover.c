@@ -696,51 +696,57 @@ int main(int argc, char *argv[]){
   }else{		
 		sprintf(str,"output-%i-%.2f.csv",n,h);
     fp = fopen(str,"w");
-    fprintf(fp,"h,n,nseed,t,to_rate,mut_rate,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
+    fprintf(fp,"h,n,nseed,t,K,to_rate,mut_rate,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(nseed=4;nseed<=64;nseed*=4){
       for(p=0.0;p<=1.0;p+=0.1){
         for(q=0.0;q<=1.0;q+=0.1){
           for(halo=0;halo<=0.1;halo+=0.1){
             for(rho=0.01;rho<=0.25;rho+=0.05){
-							for(mut_rate=0.01;mut_rate<0.10;mut_rate+=0.03){
-								for(to_rate=0.01;to_rate<0.10;to_rate+=0.03){
+							for(mut_rate=0.0;mut_rate<0.10;mut_rate+=0.025){
+								for(to_rate=0.0;to_rate<0.10;to_rate+=0.025){
 									for(t=0;t<tmax;t++){
-										nsim = 0;
-										while(nsim<nsims){
-											//printf("nsim,nseed,p,q,halo,rho = %i,%i,%.2f,%.2f,%.2f,%.2f\n",nsim,nseed,p,q,halo,rho);
-											notdoneyet = 1;
-											while(notdoneyet == 1){
-												//printf("New attempt\n");
-												BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,&nsegs,&actual_mass);
-												notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
+										K=0;
+										while(K<25){
+											nsim = 0;
+											while(nsim<nsims){
+												//printf("nsim,nseed,p,q,halo,rho = %i,%i,%.2f,%.2f,%.2f,%.2f\n",nsim,nseed,p,q,halo,rho);
+												notdoneyet = 1;
+												while(notdoneyet == 1){
+													//printf("New attempt\n");
+													BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,&nsegs,&actual_mass);
+													notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
+												}
+												// correlate DNA according to cluster size K
+												correlateDNA(mx,my,mt,mnetworked,n,K);
+												// turnover according to parameterisation and number of turnover occasions:
+												Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
+												// get DNA stats
+												getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
+												// fix so that all functions below are called, pass Stats directly to getStats
+												getProxDNA(rho, mx, my, mt, mnetworked, n, &mproxnet, &mproxcyt);								
+												//getNetworkProp(xs,ys,xe,ye,nsegs,&u);
+												getMinDNASeparation(mx,my,n,&mmind);
+												S[nsim].wc = wc;
+												S[nsim].mc = mc;
+												S[nsim].wn = wn;
+												S[nsim].mn = mn;
+												S[nsim].het = het;
+												S[nsim].u = u;
+												S[nsim].d = mmind;
+												S[nsim].pnet = mproxnet;
+												S[nsim].pcyt = mproxcyt;
+												nsim++;
 											}
-											// turnover according to parameterisation and number of turnover occasions:
-											Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
-											// get DNA stats
-											getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
-											// fix so that all functions below are called, pass Stats directly to getStats
-											getProxDNA(rho, mx, my, mt, mnetworked, n, &mproxnet, &mproxcyt);								
-											//getNetworkProp(xs,ys,xe,ye,nsegs,&u);
-											getMinDNASeparation(mx,my,n,&mmind);
-											S[nsim].wc = wc;
-											S[nsim].mc = mc;
-											S[nsim].wn = wn;
-											S[nsim].mn = mn;
-											S[nsim].het = het;
-											S[nsim].u = u;
-											S[nsim].d = mmind;
-											S[nsim].pnet = mproxnet;
-											S[nsim].pcyt = mproxcyt;
-											nsim++;
+											// compute stats for the given parameterisation:
+											computeStats(S,&Ss,nsims);
+											// double the population (simplest implementation for now)
+											// for later: chose if the network remains equally heterogeneous throughout, or if we randomly draw heterogeneity of network
+											// bump to output file
+											fprintf(fp,"%.2f,%i,%i,%i,%i,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,K,t,to_rate,mut_rate,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
+											fflush(fp);
+											printf("Should print!\n");
 										}
-										// compute stats for the given parameterisation:
-										computeStats(S,&Ss,nsims);
-										// double the population (simplest implementation for now)
-										// for later: chose if the network remains equally heterogeneous throughout, or if we randomly draw heterogeneity of network
-										// bump to output file
-										fprintf(fp,"%.2f,%i,%i,%i,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,t,to_rate,mut_rate,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
-										fflush(fp);
-										printf("Should print!\n");
+										K+=5;
 									}
 								}
 							}
