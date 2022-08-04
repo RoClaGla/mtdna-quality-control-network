@@ -724,7 +724,7 @@ int main(int argc, char *argv[]){
 												getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
 												// fix so that all functions below are called, pass Stats directly to getStats
 												getProxDNA(rho, mx, my, mt, mnetworked, n, &mproxnet, &mproxcyt);								
-												//getNetworkProp(xs,ys,xe,ye,nsegs,&u);
+												getNetworkProp(xs,ys,xe,ye,nsegs,&u);
 												getMinDNASeparation(mx,my,n,&mmind);
 												S[nsim].wc = wc;
 												S[nsim].mc = mc;
