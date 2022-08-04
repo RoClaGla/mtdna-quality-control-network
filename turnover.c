@@ -717,7 +717,7 @@ int main(int argc, char *argv[]){
 													notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
 												}
 												// correlate DNA according to cluster size K
-												correlateDNA(mx,my,mt,mnetworked,n,K);
+												correlateDNA(mx,my,mt,n,K);
 												// turnover according to parameterisation and number of turnover occasions:
 												Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
 												// get DNA stats
