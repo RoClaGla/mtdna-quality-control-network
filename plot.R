@@ -24,7 +24,7 @@ TO_RATE = unique(df$to_rate)
 plot.df.1 = df[df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1],]
 plot.df.2 = df[df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[2],]
 
-vhmax = max(max(plot.df.1$vh),max(plot.df.2$vh),max(plot.df.3$vh))
+vhmax = max(max(plot.df.1$vh),max(plot.df.2$vh))
 bl = h*(1-h)/n
 fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,bl/(2*vhmax),bl/vhmax,3*bl/(2*vhmax),1), limits = c(0,vhmax))
 
