@@ -329,7 +329,7 @@ void correlateDNA(double *mx, double *my, int *mt, int n, int K){
 		}
 		k++;
 	}
-	// now turn the j of the remaining mutants into wildtypes
+	// now turn j of the remaining mutants into wildtypes
 	l = 0;
 	while(l<j){
 		// select a random index between 0 and n-1
@@ -716,10 +716,10 @@ int main(int argc, char *argv[]){
 													BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,&nsegs,&actual_mass);
 													notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
 												}
-												// correlate DNA according to cluster size K
-												correlateDNA(mx,my,mt,n,K);
 												// turnover according to parameterisation and number of turnover occasions:
 												Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
+												// correlate DNA according to cluster size K
+												correlateDNA(mx,my,mt,n,K);
 												// get DNA stats
 												getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
 												// fix so that all functions below are called, pass Stats directly to getStats
