@@ -86,10 +86,10 @@ vhl = nullret[3]/vhmax
 fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,vhl/2,vhl,2*vhl,1), limits = c(0,vhmax))
 
 p1.1 = ggplot(data = plot.df.1)+fn+
-  geom_tile(aes(x = p, y = q, fill = vh))+
+  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
   facet_wrap(~nseed)
 p1.2 = ggplot(data = plot.df.2)+fn+
-  geom_tile(aes(x = p, y = q, fill = vh))+
+  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
   facet_wrap(~nseed)
   
 filename = paste("vh",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
