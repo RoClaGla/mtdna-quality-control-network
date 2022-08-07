@@ -125,6 +125,10 @@ plot.df.1 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[1] & df
 plot.df.2 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[1] & df$p == 1 & df$q == 0,]
 plot.df.3 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[1] & df$p == 1 & df$q == 0,]
 
+plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
+plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
+plot.df.3$vhprime = plot.df.3$vh/(plot.df.3$mh*(1-plot.df.3$mh))
+
 p1.1 = ggplot(data = plot.df.1)+
   geom_line(aes(x = t, y = vhprime))+
   facet_wrap(K~to_rate)
