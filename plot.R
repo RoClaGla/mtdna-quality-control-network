@@ -123,8 +123,8 @@ dev.off()
 
 
 plot.df.1 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[1] & df$p == 1 & df$q == 0,]
-plot.df.2 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[1] & df$p == 1 & df$q == 0,]
-plot.df.3 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[1] & df$p == 1 & df$q == 0,]
+plot.df.2 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[2] & df$p == 1 & df$q == 0,]
+plot.df.3 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[3] & df$p == 1 & df$q == 0,]
 
 plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
 plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
