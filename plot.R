@@ -12,6 +12,11 @@ if(length(args)<4){
   stop("Need input file, population size, initial heteroplasmy, and repulsive halo (nonrepulsive = 0)!\n")
 }
 
+inputfile = args[1]
+n = as.numeric(args[2])
+h = as.numeric(args[3])
+halo = as.numeric(args[4])
+
 # Function to predict V(h) from E(h^2)-E(h)^2 with statistical simulations
 vhest = function(p, q, h, n, pc, alpha, beta){
   wn0 = round(p*(1-h)*n)
@@ -68,28 +73,32 @@ vhest = function(p, q, h, n, pc, alpha, beta){
   return(c(alpha, beta, vhprime, vn))
 }
 
-inputfile = args[1]
-n = as.numeric(args[2])
-h = as.numeric(args[3])
-halo = as.numeric(args[4])
-
 df = read.csv(inputfile, header = T)
 MUT_RATE = unique(df$mut_rate)
 TO_RATE = unique(df$to_rate)
 
-plot.df.1 = df[df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1] & df$K == 0,]
-plot.df.2 = df[df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[2] & df$K == 0,]
+plot.df.1 = df[df$nseed == 4 & df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1] & df$K == 0,]
+plot.df.2 = df[df$nseed == 4 & df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[2] & df$K == 0,]
 
-vhmax = max(max(plot.df.1$vh),max(plot.df.2$vh))
+plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
+plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
+
+vhmax = max(max(plot.df.1$vhprime),max(plot.df.2$vhprime))
 nullret = vhest(0,0,h,n,0.5,4.5,4.5)
 vhl = nullret[3]/vhmax
 fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,vhl/2,vhl,2*vhl,1), limits = c(0,vhmax))
 
 p1.1 = ggplot(data = plot.df.1)+fn+
-  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
+  geom_tile(aes(x = p, y = q, fill = vhprime))+
   facet_wrap(~nseed)
-p1.2 = ggplot(data = plot.df.2)+fn+
-  geom_tile(aes(x = p, y = q, fill = vh/(mh*(1-mh))))+
+p1.2 = ggplot(data = plot.df.1)+fn2+
+  geom_tile(aes(x = p, y = q, fill = vn))+
+  facet_wrap(~nseed)
+p2.1 = ggplot(data = plot.df.2)+fn+
+  geom_tile(aes(x = p, y = q, fill = vhprime))+
+  facet_wrap(~nseed)
+p2.2 = ggplot(data = plot.df.2)+fn2+
+  geom_tile(aes(x = p, y = q, fill = vn))+
   facet_wrap(~nseed)
   
 filename = paste("vh",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
