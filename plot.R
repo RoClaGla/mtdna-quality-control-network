@@ -77,8 +77,8 @@ df = read.csv(inputfile, header = T)
 MUT_RATE = unique(df$mut_rate)
 TO_RATE = unique(df$to_rate)
 
-plot.df.1 = df[df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1],]
-plot.df.2 = df[df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[2],]
+plot.df.1 = df[df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1] & K == 0,]
+plot.df.2 = df[df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[2] & K == 0,]
 
 vhmax = max(max(plot.df.1$vh),max(plot.df.2$vh))
 bl = vhest(0,0,h,n,0.5,4.5,4.5)
