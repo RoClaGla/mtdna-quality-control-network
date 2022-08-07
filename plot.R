@@ -130,19 +130,19 @@ plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
 plot.df.3$vhprime = plot.df.3$vh/(plot.df.3$mh*(1-plot.df.3$mh))
 
 p1.1 = ggplot(data = plot.df.1)+
-  geom_point(aes(x = t, y = vhprime))+
+  geom_point(aes(x = t, y = vhprime, col = as.factor(rho)))+
   facet_wrap(K~to_rate)
 #p1.2 = ggplot(data = plot.df.1)+fn2+
 #  geom_tile(aes(x = p, y = q, fill = vn))+
 #  facet_wrap(~nseed)
 p2.1 = ggplot(data = plot.df.2)+
-  geom_point(aes(x = t, y = vhprime))+
+  geom_point(aes(x = t, y = vhprime, col = as.factor(rho))+
   facet_wrap(K~to_rate)
 #p2.2 = ggplot(data = plot.df.2)+fn2+
 #  geom_tile(aes(x = p, y = q, fill = vn))+
 #  facet_wrap(~nseed)
 p3.1 = ggplot(data = plot.df.3)+
-  geom_point(aes(x = t, y = vhprime))+
+  geom_point(aes(x = t, y = vhprime, col = as.factor(rho)))+
   facet_wrap(K~to_rate)
 
 filename = paste("vhprime-vs-turnover",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
