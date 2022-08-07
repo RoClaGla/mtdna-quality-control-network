@@ -81,8 +81,8 @@ MUT_RATE = unique(df$mut_rate)
 TO_RATE = unique(df$to_rate)
 
 plot.df.1 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1] & df$K == 0,]
-plot.df.2 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1] & df$K == 10,]
-plot.df.3 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1] & df$K == 20,]
+plot.df.2 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1] & df$K == 5,]
+plot.df.3 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RATE[1] & df$K == 10,]
 
 plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
 plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
