@@ -88,7 +88,7 @@ plot.df.3$vhprime = plot.df.3$vh/(plot.df.3$mh*(1-plot.df.3$mh))
 vhmax = max(max(plot.df.1$vhprime),max(plot.df.2$vhprime),max(plot.df.3$vhprime))
 nullret = vhest(0,0,h,n,0.5,10,10)
 vhl = nullret[3]/vhmax
-fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,vhl/2,vhl,2*vhl,1), limits = c(0,vhmax))
+fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,.05,.1,.2,1), limits = c(0,vhmax))
 
 p1.1 = ggplot(data = plot.df.1)+
   geom_tile(aes(x = p, y = q, fill = vhprime))+fn+
