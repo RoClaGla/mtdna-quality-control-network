@@ -90,20 +90,20 @@ nullret = vhest(0,0,h,n,0.5,10,10)
 vhl = nullret[3]/vhmax
 fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,vhl/2,vhl,2*vhl,1), limits = c(0,vhmax))
 
-p1.1 = ggplot(data = plot.df.1)+fn+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+
+p1.1 = ggplot(data = plot.df.1)+
+  geom_tile(aes(x = p, y = q, fill = vhprime))+fn+
   facet_wrap(~nseed)
 #p1.2 = ggplot(data = plot.df.1)+fn2+
 #  geom_tile(aes(x = p, y = q, fill = vn))+
 #  facet_wrap(~nseed)
-p2.1 = ggplot(data = plot.df.2)+fn+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+
+p2.1 = ggplot(data = plot.df.2)+
+  geom_tile(aes(x = p, y = q, fill = vhprime))+fn+
   facet_wrap(~nseed)
 #p2.2 = ggplot(data = plot.df.2)+fn2+
 #  geom_tile(aes(x = p, y = q, fill = vn))+
 #  facet_wrap(~nseed)
-p3.1 = ggplot(data = plot.df.3)+fn+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+
+p3.1 = ggplot(data = plot.df.3)+
+  geom_tile(aes(x = p, y = q, fill = vhprime))+fn+
   facet_wrap(~nseed)
 
 filename = paste("vh",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
