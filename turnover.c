@@ -694,7 +694,7 @@ int main(int argc, char *argv[]){
     Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho);
     return(0);
   }else{		
-		sprintf(str,"output-%i-%.2f.csv",n,h);
+		sprintf(str,"test-output-%i-%.2f.csv",n,h);
     fp = fopen(str,"w");
     fprintf(fp,"h,n,nseed,t,K,to_rate,mut_rate,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(nseed=4;nseed<=64;nseed*=4){
@@ -703,9 +703,9 @@ int main(int argc, char *argv[]){
           for(halo=0;halo<=0.1;halo+=0.1){
             for(rho=0.05;rho<=0.25;rho+=0.1){
 							K=0;
-							while(K<25){
-								for(mut_rate=0.0;mut_rate<0.05;mut_rate+=0.025){
-									for(to_rate=0.0;to_rate<0.05;to_rate+=0.025){
+							while(K<15){
+								for(mut_rate=0.0;mut_rate<=0.05;mut_rate+=0.025){
+									for(to_rate=0.0;to_rate<=0.05;to_rate+=0.025){
 										for(t=0;t<tmax;t++){
 											nsim = 0;
 											while(nsim<nsims){
@@ -716,10 +716,10 @@ int main(int argc, char *argv[]){
 													BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,&nsegs,&actual_mass);
 													notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
 												}
-												// turnover according to parameterisation and number of turnover occasions:
-												Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
 												// correlate DNA according to cluster size K
 												correlateDNA(mx,my,mt,n,K);
+												// turnover according to parameterisation and number of turnover occasions:
+												Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
 												// get DNA stats
 												getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
 												// fix so that all functions below are called, pass Stats directly to getStats
