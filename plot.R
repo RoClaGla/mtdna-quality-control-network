@@ -124,52 +124,64 @@ dev.off()
 
 plot.df.1 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[1] & df$p == 1 & df$q == 0,]
 plot.df.2 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[2] & df$p == 1 & df$q == 0,]
-plot.df.3 = df[df$halo == halo & df$nseed == 4 & df$mut_rate == MUT_RATE[3] & df$p == 1 & df$q == 0,]
+plot.df.3 = df[df$halo == halo & df$nseed == 16 & df$mut_rate == MUT_RATE[1] & df$p == 1 & df$q == 0,]
+plot.df.4 = df[df$halo == halo & df$nseed == 16 & df$mut_rate == MUT_RATE[2] & df$p == 1 & df$q == 0,]
+plot.df.5 = df[df$halo == halo & df$nseed == 64 & df$mut_rate == MUT_RATE[1] & df$p == 1 & df$q == 0,]
+plot.df.6 = df[df$halo == halo & df$nseed == 64 & df$mut_rate == MUT_RATE[2] & df$p == 1 & df$q == 0,]
 
 plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
 plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
 plot.df.3$vhprime = plot.df.3$vh/(plot.df.3$mh*(1-plot.df.3$mh))
+plot.df.4$vhprime = plot.df.4$vh/(plot.df.4$mh*(1-plot.df.4$mh))
+plot.df.5$vhprime = plot.df.5$vh/(plot.df.5$mh*(1-plot.df.5$mh))
+plot.df.6$vhprime = plot.df.6$vh/(plot.df.6$mh*(1-plot.df.6$mh))
 
 p1.1 = ggplot(data = plot.df.1)+
   geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
   facet_wrap(K~to_rate)
-#p1.2 = ggplot(data = plot.df.1)+fn2+
-#  geom_tile(aes(x = p, y = q, fill = vn))+
-#  facet_wrap(~nseed)
 p2.1 = ggplot(data = plot.df.2)+
   geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
   facet_wrap(K~to_rate)
-#p2.2 = ggplot(data = plot.df.2)+fn2+
-#  geom_tile(aes(x = p, y = q, fill = vn))+
-#  facet_wrap(~nseed)
 p3.1 = ggplot(data = plot.df.3)+
+  geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
+  facet_wrap(K~to_rate)
+p4.1 = ggplot(data = plot.df.4)+
+  geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
+  facet_wrap(K~to_rate)
+p5.1 = ggplot(data = plot.df.5)+
+  geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
+  facet_wrap(K~to_rate)
+p6.1 = ggplot(data = plot.df.6)+
   geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
   facet_wrap(K~to_rate)
 
 filename = paste("vhprime-vs-turnover",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
 res.factor = 3
 png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
-grid.arrange(p1.1,p2.1,p3.1,nrow = 3)
+grid.arrange(p1.1,p2.1,p3.1,,p4.1,p5.1,p6.1,nrow = 6)
 dev.off()
 
 p1.1 = ggplot(data = plot.df.1)+
   geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
   facet_wrap(K~to_rate)
-#p1.2 = ggplot(data = plot.df.1)+fn2+
-#  geom_tile(aes(x = p, y = q, fill = vn))+
-#  facet_wrap(~nseed)
 p2.1 = ggplot(data = plot.df.2)+
   geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
   facet_wrap(K~to_rate)
-#p2.2 = ggplot(data = plot.df.2)+fn2+
-#  geom_tile(aes(x = p, y = q, fill = vn))+
-#  facet_wrap(~nseed)
 p3.1 = ggplot(data = plot.df.3)+
+  geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
+  facet_wrap(K~to_rate)
+p4.1 = ggplot(data = plot.df.4)+
+  geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
+  facet_wrap(K~to_rate)
+p5.1 = ggplot(data = plot.df.5)+
+  geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
+  facet_wrap(K~to_rate)
+p6.1 = ggplot(data = plot.df.6)+
   geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
   facet_wrap(K~to_rate)
 
 filename = paste("mh-vs-turnover",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
 res.factor = 3
 png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
-grid.arrange(p1.1,p2.1,p3.1,nrow = 3)
+grid.arrange(p1.1,p2.1,p3.1,,p4.1,p5.1,p6.1,nrow = 6)
 dev.off()
