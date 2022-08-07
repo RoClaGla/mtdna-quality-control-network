@@ -158,7 +158,7 @@ p6.1 = ggplot(data = plot.df.6)+
 filename = paste("vhprime-vs-turnover",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
 res.factor = 3
 png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
-grid.arrange(p1.1,p2.1,p3.1,,p4.1,p5.1,p6.1,nrow = 6)
+grid.arrange(p1.1,p2.1,p3.1,p4.1,p5.1,p6.1,nrow = 6)
 dev.off()
 
 p1.1 = ggplot(data = plot.df.1)+
