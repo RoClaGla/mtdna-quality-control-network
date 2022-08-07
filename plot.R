@@ -82,7 +82,7 @@ plot.df.2 = df[df$rho == 0.05 & df$mut_rate == MUT_RATE[1] & df$to_rate == TO_RA
 
 vhmax = max(max(plot.df.1$vh),max(plot.df.2$vh))
 bl = vhest(0,0,h,n,0.5,4.5,4.5)
-fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,bl/(2*vhmax),bl/vhmax,3*bl/(2*vhmax),1), limits = c(0,vhmax))
+fn = scale_color_gradientn(colors = c("black","blue","white","red","black"), values = c(0,0.05,0.1,0.2,1), limits = c(0,vhmax))
 
 p1.1 = ggplot(data = plot.df.1)+fn+
   geom_tile(aes(x = p, y = q, fill = vh))+
