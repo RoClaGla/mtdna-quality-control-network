@@ -96,19 +96,19 @@ colfn = scale_fill_gradientn(colors = c("black","blue","white","red","black"),va
 #colfn2 = scale_fill_gradientn(colors = c("black","blue","white","red","black"),values = c(0,vnl/2,vnl,2*vnl,1), limits = c(0,vnmax))
 
 p1.1 = ggplot(data = plot.df.1)+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+fn+
+  geom_tile(aes(x = p, y = q, fill = vhprime))+colfn+
   facet_wrap(~nseed)
 #p1.2 = ggplot(data = plot.df.1)+fn2+
 #  geom_tile(aes(x = p, y = q, fill = vn))+
 #  facet_wrap(~nseed)
 p2.1 = ggplot(data = plot.df.2)+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+fn+
+  geom_tile(aes(x = p, y = q, fill = vhprime))+colfn+
   facet_wrap(~nseed)
 #p2.2 = ggplot(data = plot.df.2)+fn2+
 #  geom_tile(aes(x = p, y = q, fill = vn))+
 #  facet_wrap(~nseed)
 p3.1 = ggplot(data = plot.df.3)+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+fn+
+  geom_tile(aes(x = p, y = q, fill = vhprime))+colfn+
   facet_wrap(~nseed)
 
 filename = paste("vh",ifelse(halo>0,yes = "-repel",""),".png",sep = "")
