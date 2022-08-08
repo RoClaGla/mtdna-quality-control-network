@@ -137,7 +137,7 @@ p2.1 = ggplot(data = plot.df.2)+
   geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
   facet_wrap(K~to_rate)
 
-filename = paste("vhprime-vs-turnover-",toString(nseed),"-"toString(mut_rate),"-",toString(to_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
+filename = paste("vhprime-vs-turnover-",toString(nseed),"-",toString(mut_rate),"-",toString(to_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
 res.factor = 3
 png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
 grid.arrange(p1.1,p2.1,nrow = 2)
