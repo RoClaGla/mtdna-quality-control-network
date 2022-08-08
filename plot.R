@@ -135,9 +135,9 @@ p1.1 = ggplot(data = plot.df.1)+
   facet_grid(K~to_rate)
 p2.1 = ggplot(data = plot.df.2)+
   geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
-  facet_grid(K~to_rate)
+  facet_grid(K~to_rate, labeller = labeller(to_rate = label_both, K = label_both))
 
-filename = paste("vhprime-vs-turnover-",toString(nseed),"-",toString(mut_rate),"-",toString(to_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
+filename = paste("vhprime-vs-turnover-",toString(nseed),"-",toString(mut_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
 res.factor = 3
 png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
 grid.arrange(p1.1,p2.1,nrow = 2)
@@ -148,9 +148,9 @@ p1.1 = ggplot(data = plot.df.1)+
   facet_grid(K~to_rate)
 p2.1 = ggplot(data = plot.df.2)+
   geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
-  facet_grid(K~to_rate)
+  facet_grid(K~to_rate, labeller = labeller(to_rate = label_both, K = label_both))
 
-filename = paste("mh-vs-turnover-",toString(nseed),"-",toString(mut_rate),"-",toString(to_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
+filename = paste("mh-vs-turnover-",toString(nseed),"-",toString(mut_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
 res.factor = 3
 png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
 grid.arrange(p1.1,p2.1,nrow = 2)
