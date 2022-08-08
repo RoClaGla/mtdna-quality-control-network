@@ -132,10 +132,10 @@ plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
 
 p1.1 = ggplot(data = plot.df.1)+
   geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
-  facet_wrap(K~to_rate)
+  facet_grid(K~to_rate)
 p2.1 = ggplot(data = plot.df.2)+
   geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
-  facet_wrap(K~to_rate)
+  facet_grid(K~to_rate)
 
 filename = paste("vhprime-vs-turnover-",toString(nseed),"-",toString(mut_rate),"-",toString(to_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
 res.factor = 3
@@ -145,10 +145,10 @@ dev.off()
 
 p1.1 = ggplot(data = plot.df.1)+
   geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
-  facet_wrap(K~to_rate)
+  facet_grid(K~to_rate)
 p2.1 = ggplot(data = plot.df.2)+
   geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
-  facet_wrap(K~to_rate)
+  facet_grid(K~to_rate)
 
 filename = paste("mh-vs-turnover-",toString(nseed),"-",toString(mut_rate),"-",toString(to_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
 res.factor = 3
