@@ -350,8 +350,8 @@ void correlateDNA(double *mx, double *my, int *mt, int n, int K){
 
 // counts the number of mutants with a wildtype within rho
 int getMutantProp(double rho, double *mx, double *my, int *mt, int n, double *propwithin){
-	int i, j, pxDNA, k, mus;
-	double mean;
+	int i, j;
+	double mus, pxDNA;
 	
 	pxDNA = 0;
 	mus = 0;
@@ -360,9 +360,10 @@ int getMutantProp(double rho, double *mx, double *my, int *mt, int n, double *pr
 		if(mt[i] == 1){
 			mus++;
 			for(j=1;j<n;j++){
-				// is this a wildtype and is the distance smaller than rho
+				// is this a wildtype and is the distance smaller than rho?
 				if(mt[j]==0 && ((mx[i]-mx[j])*(mx[i]-mx[j])+(mx[i]-mx[j])*(mx[i]-mx[j])<rho*rho)){
 					pxDNA++;
+					break;
 				}
 			}
 		}
@@ -658,7 +659,7 @@ int main(int argc, char *argv[]){
 	int wc,mc,wn,mn;
 	double het, mhet, vhet, proxnet,proxcyt,vproxnet,vproxcyt;
 	double mwc, mmc, mwn, mmn,vwc,vmc,vwn,vmn,u;
-	double mprop, vprop, mmind, vmind, mutprop;
+	double mprop, vprop, mmind, vmind;
 	double mut_rate, to_rate; // mutation and turnover rates; 
 	int t,tmax; // maximal number of "cycles" of turnover/mtDNA mutation before cell division
 	Stats *S;
@@ -772,7 +773,7 @@ int main(int argc, char *argv[]){
 									S[nsim].d = mmind;
 									S[nsim].pnet = mproxnet;
 									S[nsim].pcyt = mproxcyt;
-									S[nsim].mprop = mutprop;
+									S[nsim].mprop = mprop;
 									nsim++;
 								}
 								// compute stats for the given parameterisation:
