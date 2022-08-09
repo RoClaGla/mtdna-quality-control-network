@@ -746,7 +746,7 @@ int main(int argc, char *argv[]){
 									correlateDNA(mx,my,mt,n,K);
 									// get DNA stats
 									getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
-									getMutantProp(mx,my,mt,n,&mutprop);
+									getMutantProp(rho,mx,my,mt,n,&mutprop);
 									// fix so that all functions below are called, pass Stats directly to getStats
 									getProxDNA(rho, mx, my, mt, mnetworked, n, &mproxnet, &mproxcyt);								
 									getNetworkProp(xs,ys,xe,ye,nsegs,&u);
