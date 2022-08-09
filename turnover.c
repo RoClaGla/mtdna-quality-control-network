@@ -370,7 +370,7 @@ int getMutantProp(double rho, double *mx, double *my, int *mt, int n, double *pr
 	}
 	
 	*propwithin = (double) pxDNA/((double) mus);
-	
+	return(0);
 }
 
 // function calculates the mean number of DNAs within rho of each other in the top daughter
