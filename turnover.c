@@ -274,23 +274,10 @@ int PlaceDNA(double *xs, double *ys, double *xe, double *ye, double *mx, double 
 }
 
 // function spatially correlates K DNA mutants with a random point P on the perimeter
-void correlateDNA(double *mx, double *my, int *mt, int n, int K){
+void correlateDNA(double *mx, double *my, int *mt, int n, double radius){
 	double x,y,r;
 	double thisdist,mindist,ball;
 	int i,j,k,l, mini, iinset, *mmi;
-	int nmus;
-	
-	// do a test to check if there are at least K mutants.
-	nmus = 0;
-	for(i=0;i<n;i++){
-		if(mt[i]==1){
-			nmus += 1;
-		}
-	}
-	if(nmus<K){
-		printf("Error: there are fewer than K mutants. Try again with a more fitting K.\n");
-		exit(0);
-	}
 	
 	// keep track of the recorded indices of the closest ones
 	mmi = (int *)malloc(sizeof(int)*K);
@@ -756,7 +743,7 @@ int main(int argc, char *argv[]){
 									// turnover according to parameterisation and number of turnover occasions:
 									//Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
 									// correlate DNA according to cluster size K
-									correlateDNA(mx,my,mt,n,K);
+									//correlateDNA(mx,my,mt,n,K);
 									// get DNA stats
 									getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
 									getMutantProp(rho,mx,my,mt,n,&mprop);
