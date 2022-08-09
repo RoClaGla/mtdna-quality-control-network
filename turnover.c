@@ -274,7 +274,7 @@ int PlaceDNA(double *xs, double *ys, double *xe, double *ye, double *mx, double 
 }
 
 // function spatially correlates K DNA mutants with a random point P on the perimeter
-void correlateDNA(double *mx, double *my, int *mt, int n, double radius){
+void correlateDNA(double *mx, double *my, int *mt, int n, int K){
 	double x,y,r;
 	double thisdist,mindist,ball;
 	int i,j,k,l, mini, iinset, *mmi;
