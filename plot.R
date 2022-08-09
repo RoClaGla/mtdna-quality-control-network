@@ -8,17 +8,12 @@ args = commandArgs(trailingOnly = T)
 
 cat("Processing inputs...\n")
 
-if(length(args)<4){
+if(length(args)<2){
   stop("Need input file, population size, initial heteroplasmy, and repulsive halo (nonrepulsive = 0)!\n")
 }
 
 inputfile = args[1]
 n = as.numeric(args[2])
-h = as.numeric(args[3])
-nseed = as.numeric(args[4])
-halo = as.numeric(args[5])
-mut_rate = as.numeric(args[6])
-to_rate = as.numeric(args[7])
 
 
 # Function to predict V(h) from E(h^2)-E(h)^2 with statistical simulations
@@ -78,80 +73,16 @@ vhest = function(p, q, h, n, pc, alpha, beta){
 }
 
 df = read.csv(inputfile, header = T)
-MUT_RATE = unique(df$mut_rate)
-TO_RATE = unique(df$to_rate)
 
-plot.df.1 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == mut_rate & df$to_rate == to_rate & df$K == 0,]
-plot.df.2 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == mut_rate & df$to_rate == to_rate & df$K == 5,]
-plot.df.3 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == mut_rate & df$to_rate == to_rate & df$K == 10,]
-plot.df.4 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == mut_rate & df$to_rate == to_rate & df$K == 15,]
-plot.df.5 = df[df$halo == halo & df$t == 0 & df$rho == 0.05 & df$mut_rate == mut_rate & df$to_rate == to_rate & df$K == 20,]
-
+plot.df.1 = df[df$p==1 & df$q==0,]
 plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
-plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
-plot.df.3$vhprime = plot.df.3$vh/(plot.df.3$mh*(1-plot.df.3$mh))
-plot.df.4$vhprime = plot.df.4$vh/(plot.df.4$mh*(1-plot.df.4$mh))
-plot.df.5$vhprime = plot.df.5$vh/(plot.df.5$mh*(1-plot.df.5$mh))
 
-vhmax = max(max(plot.df.1$vhprime),max(plot.df.2$vhprime),max(plot.df.3$vhprime),max(plot.df.4$vhprime),max(plot.df.5$vhprime))
+p1 = ggplot(data = plot.df.1)+
+	geom_line(aes(x = rho, y = mmprop, col = as.factor(nseed)))+
+	facet_grid(halo~h)
 
-nullret = vhest(0,0,h,n,0.5,10,10)
-
-vhl = nullret[3]/vhmax
-colfn = scale_fill_gradientn(colors = c("black","blue","white","red","black"),values = c(0,vhl/2,vhl,2*vhl,1),  limits = c(0,vhmax))
-
-p1.1 = ggplot(data = plot.df.1)+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+colfn+
-  facet_wrap(~nseed)
-p2.1 = ggplot(data = plot.df.2)+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+colfn+
-  facet_wrap(~nseed)
-p3.1 = ggplot(data = plot.df.3)+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+colfn+
-  facet_wrap(~nseed)
-p4.1 = ggplot(data = plot.df.4)+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+colfn+
-  facet_wrap(~nseed)
-p5.1 = ggplot(data = plot.df.5)+
-  geom_tile(aes(x = p, y = q, fill = vhprime))+colfn+
-  facet_wrap(~nseed)
-
-filename = paste("vh-",toString(mut_rate),"-",toString(to_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
+filename = paste("mmprop",".png")
 res.factor = 3
-png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
-grid.arrange(p1.1,p2.1,p3.1,p4.1,p5.1,nrow = 5)
-dev.off()
-
-
-plot.df.1 = df[df$halo == halo & df$nseed == nseed & df$mut_rate == mut_rate & df$p == 1 & df$q == 0,]
-plot.df.2 = df[df$halo == halo & df$nseed == nseed & df$mut_rate == mut_rate & df$p == 1 & df$q == 0,]
-
-
-plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
-plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
-
-p1.1 = ggplot(data = plot.df.1)+
-  geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
-  facet_grid(K~to_rate)
-p2.1 = ggplot(data = plot.df.2)+
-  geom_line(aes(x = t, y = vhprime, col = as.factor(rho)))+
-  facet_grid(K~to_rate, labeller = labeller(to_rate = label_both, K = label_both))
-
-filename = paste("vhprime-vs-turnover-",toString(nseed),"-",toString(mut_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
-res.factor = 3
-png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
-grid.arrange(p1.1,p2.1,nrow = 2)
-dev.off()
-
-p1.1 = ggplot(data = plot.df.1)+
-  geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
-  facet_grid(K~to_rate)
-p2.1 = ggplot(data = plot.df.2)+
-  geom_line(aes(x = t, y = mh, col = as.factor(rho)))+
-  facet_grid(K~to_rate, labeller = labeller(to_rate = label_both, K = label_both))
-
-filename = paste("mh-vs-turnover-",toString(nseed),"-",toString(mut_rate),ifelse(halo>0,yes = "-repel",""),".png",sep = "")
-res.factor = 3
-png(filename, height = 1200*res.factor, width = 1200*res.factor, res = 72*res.factor)
-grid.arrange(p1.1,p2.1,nrow = 2)
+png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
+p1
 dev.off()
