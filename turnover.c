@@ -731,14 +731,14 @@ int main(int argc, char *argv[]){
     Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho);
     return(0);
   }else{		
-		sprintf(str,"test-output-%i-%.2f.csv",n,h);
+		sprintf(str,"output-%i-%.2f.csv",n,h);
     fp = fopen(str,"w");
     fprintf(fp,"h,n,nseed,K,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(nseed=4;nseed<=64;nseed*=4){
       for(p=0.0;p<=1.0;p+=0.1){
         for(q=0.0;q<=1.0;q+=0.1){
           for(halo=0;halo<=0.1;halo+=0.1){
-            for(rho=0.0;rho<=.3;rho+=0.05){
+            for(rho=0.0;rho<=.3;rho+=0.025){
 							for(K=0;K<15;K+=5){
 								//for(mut_rate=0.0;mut_rate<=0.05;mut_rate+=0.025){
 								//for(to_rate=0.0;to_rate<=0.05;to_rate+=0.025){
