@@ -550,8 +550,9 @@ int computeStats(Stats *s, SumStats *ss, int nsims){
 	double mnet,vnet,mcyt,vcyt,het,hetvar;
 	double mwc,mmc,mwn,mmn;
 	double vwc,vmc,vwn,vmn;
-	double mmass, vmass;
-	double mmd, vmd;
+	double mmass,vmass;
+	double mmd,vmd;
+	double mmprop,vmprop;
 	
 	// calculate means and variances of the number of nearby neighbors for this DNA distribution
 	mnet = mcyt = vnet = vcyt = 0;
@@ -641,7 +642,7 @@ int computeStats(Stats *s, SumStats *ss, int nsims){
 	mmprop/=nsims;
 	ss->mmprop = mmprop;
 	for(i=0;i<nsims;i++){
-		vmprop+=(s[i].mprop-mmprop)*(s[i].mprop-mmprop)
+		vmprop+=(s[i].mprop-mmprop)*(s[i].mprop-mmprop);
 	}
 	ss->vmprop=vmprop/(nsims-1);
 	
