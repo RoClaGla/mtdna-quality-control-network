@@ -634,6 +634,17 @@ int computeStats(Stats *s, SumStats *ss, int nsims){
 	}
 	ss->vd = vmd/(nsims-1);
 	
+	mmprop = vmprop = 0;
+	for(i=0;i<nsims;i++){
+		mmprop+=s[i].mprop;
+	}
+	mmprop/=nsims;
+	ss->mmprop = mmprop;
+	for(i=0;i<nsims;i++){
+		vmprop+=(s[i].mprop-mmprop)*(s[i].mprop-mmprop)
+	}
+	ss->vmprop=vmprop/(nsims-1);
+	
 	return(0);
 }
 
@@ -720,7 +731,7 @@ int main(int argc, char *argv[]){
   }else{		
 		sprintf(str,"test-output-%i-%.2f.csv",n,h);
     fp = fopen(str,"w");
-    fprintf(fp,"h,n,nseed,t,K,to_rate,mut_rate,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
+    fprintf(fp,"h,n,nseed,K,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(nseed=4;nseed<=64;nseed*=4){
       for(p=0.0;p<=1.0;p+=0.1){
         for(q=0.0;q<=1.0;q+=0.1){
