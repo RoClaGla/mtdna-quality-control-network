@@ -76,11 +76,15 @@ df = read.csv(inputfile, header = T)
 
 plot.df.1 = df[df$p==1 & df$q==0,]
 plot.df.2 = df[df$p==1 & df$q==1,]
+plot.df.3 = df[df$p==0 & df$q==0,]
 plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
+plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
+plot.df.3$vhprime = plot.df.3$vh/(plot.df.3$mh*(1-plot.df.3$mh))
 
 p1 = ggplot()+
 	geom_line(data = plot.df.1, aes(x = rho, y = mmprop, col = as.factor(nseed)))+
 	geom_line(data = plot.df.2, aes(x = rho, y = mmprop, col = as.factor(nseed)), linetype = "dashed")+
+	geom_line(data = plot.df.3, aes(x = rho, y = mmprop, col = as.factor(nseed)), linetype = "dotted")+
 	facet_grid(h~halo)
 
 filename = paste("mmprop",".png")
