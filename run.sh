@@ -12,4 +12,5 @@ gcc -o3 turnover.c -lm -o turnover.ce
 ./turnover.ce --snapshots 1 50 0.01 0.02 100 0.5 16 0.1 0.5 0.5 0.25 25 > tmps5 &
 ./turnover.ce --snapshots 1 50 0.01 0.02 100 0.5 64 0.1 0.5 0.5 0.25 25 > tmps6 &
 
-./turnover.ce --simulate 1500 50 0.01 0.02 100 > tmp1 &
+./turnover.ce --simulate 1500 50 0.01 0.02 100 0.1 > tmp1 &
+./turnover.ce --simulate 1500 50 0.01 0.02 100 0.5 > tmp2 &
