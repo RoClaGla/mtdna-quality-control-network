@@ -75,11 +75,13 @@ vhest = function(p, q, h, n, pc, alpha, beta){
 df = read.csv(inputfile, header = T)
 
 plot.df.1 = df[df$p==1 & df$q==0,]
+plot.df.2 = df[df$p==1 & df$q==1,]
 plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
 
-p1 = ggplot(data = plot.df.1)+
-	geom_line(aes(x = rho, y = mmprop, col = as.factor(nseed)))+
-	facet_grid(halo~h)
+p1 = ggplot()+
+	geom_line(data = plot.df.1, aes(x = rho, y = mmprop, col = as.factor(nseed)))+
+	geom_line(data = plot.df.2, aes(x = rho, y = mmprop, col = as.factor(nseed)), linetype = "dashed")+
+	facet_grid(h~halo)
 
 filename = paste("mmprop",".png")
 res.factor = 3
