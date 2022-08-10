@@ -657,7 +657,7 @@ int main(int argc, char *argv[]){
   
   error = 1;
   printf("argc = %i\n",argc);
-  if(argc == 14 || argc == 7){
+  if(argc == 14 || argc == 8){
     // computational parameters and parameters in common
     nsims = atoi(argv[2]);
     // network parameters
@@ -666,11 +666,11 @@ int main(int argc, char *argv[]){
     branchprob = atof(argv[5]);
     // genetic parameters
     n = atoi(argv[6]);
+		h = atof(argv[7]);
     if(argc == 14 && strcmp(argv[1],"--snapshots\0")==0){
       // generate snapshot
       error = 0;
       output = 1;
-			h = atof(argv[7]);
       nseed = atoi(argv[8]);
       halo = atof(argv[9]);
       p = atof(argv[10]);
@@ -679,7 +679,7 @@ int main(int argc, char *argv[]){
 			K = atoi(argv[13]);
       printf("Parameters nsims, nseed, target_mass, seglength, branchprob, h, n, halo, p, q: %i, %i, %.f, %.2f, %.2f, %.2f, %i, %.2f, %.2f, %.2f\n", nsims,nseed,target_mass,seglength,branchprob,h,n,halo,p,q);
     }
-    if(argc == 7 && strcmp(argv[1],"--simulate\0")==0){
+    if(argc == 8 && strcmp(argv[1],"--simulate\0")==0){
       // no visual output
       error = 0;
       output = 0;
@@ -720,62 +720,60 @@ int main(int argc, char *argv[]){
   }else{		
 		sprintf(str,"output-%i.csv",n);
     fp = fopen(str,"w");
-    fprintf(fp,"h,n,nseed,K,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
+    fprintf(fp,"h,n,nseed,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(nseed=4;nseed<=64;nseed*=4){
-			for(h=0.1;h<=0.5;h+=0.4){
-				for(p=0.0;p<=1.0;p+=0.1){
-					for(q=0.0;q<=1.0;q+=0.1){
-						for(halo=0;halo<=0.1;halo+=0.1){
-							for(rho=0.0;rho<=.3;rho+=0.025){
-								//for(K=0;K<15;K+=5){
-								//for(mut_rate=0.0;mut_rate<=0.05;mut_rate+=0.025){
-								//for(to_rate=0.0;to_rate<=0.05;to_rate+=0.025){
-								//for(t=0;t<tmax;t++){
-								nsim = 0;
-								while(nsim<nsims){
-									//printf("nsim,nseed,p,q,halo,rho = %i,%i,%.2f,%.2f,%.2f,%.2f\n",nsim,nseed,p,q,halo,rho);
-									notdoneyet = 1;
-									while(notdoneyet == 1){
-										//printf("New attempt\n");
-										BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,&nsegs,&actual_mass);
-										notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
-									}
-
-									// turnover according to parameterisation and number of turnover occasions:
-									//Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
-									// correlate DNA according to cluster size K
-									//correlateDNA(mx,my,mt,n,K);
-									// get DNA stats
-									getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
-									getMutantProp(rho,mx,my,mt,n,&mprop);
-									// fix so that all functions below are called, pass Stats directly to getStats
-									getSeparateProximalDNA(rho, mx, my, mt, mnetworked, n, &mproxnet, &mproxcyt);								
-									getNetworkProp(xs,ys,xe,ye,nsegs,&u);
-									getMinDNASeparation(mx,my,n,&mmind);
-									S[nsim].wc = wc;
-									S[nsim].mc = mc;
-									S[nsim].wn = wn;
-									S[nsim].mn = mn;
-									S[nsim].het = het;
-									S[nsim].u = u;
-									S[nsim].d = mmind;
-									S[nsim].pnet = mproxnet;
-									S[nsim].pcyt = mproxcyt;
-									S[nsim].mprop = mprop;
-									nsim++;
+			for(p=0.0;p<=1.0;p+=0.1){
+				for(q=0.0;q<=1.0;q+=0.1){
+					for(halo=0;halo<=0.1;halo+=0.1){
+						for(rho=0.0;rho<=.3;rho+=0.025){
+							//for(K=0;K<15;K+=5){
+							//for(mut_rate=0.0;mut_rate<=0.05;mut_rate+=0.025){
+							//for(to_rate=0.0;to_rate<=0.05;to_rate+=0.025){
+							//for(t=0;t<tmax;t++){
+							nsim = 0;
+							while(nsim<nsims){
+								//printf("nsim,nseed,p,q,halo,rho = %i,%i,%.2f,%.2f,%.2f,%.2f\n",nsim,nseed,p,q,halo,rho);
+								notdoneyet = 1;
+								while(notdoneyet == 1){
+									//printf("New attempt\n");
+									BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,&nsegs,&actual_mass);
+									notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
 								}
-								// compute stats for the given parameterisation:
-								computeStats(S,&Ss,nsims);
-								// for later: chose if the network remains equally heterogeneous throughout, or if we randomly draw heterogeneity of network
-								// bump to output file
-								fprintf(fp,"%.2f,%i,%i,%.2f,%.2f,%.2f,%.3f,%f,%f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mmprop,Ss.vmprop,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
-								fflush(fp);
-								printf("Should print!\n");
-								//}
-								//}
-								//}
-								//}
+
+								// turnover according to parameterisation and number of turnover occasions:
+								//Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
+								// correlate DNA according to cluster size K
+								//correlateDNA(mx,my,mt,n,K);
+								// get DNA stats
+								getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
+								getMutantProp(rho,mx,my,mt,n,&mprop);
+								// fix so that all functions below are called, pass Stats directly to getStats
+								getSeparateProximalDNA(rho, mx, my, mt, mnetworked, n, &mproxnet, &mproxcyt);								
+								getNetworkProp(xs,ys,xe,ye,nsegs,&u);
+								getMinDNASeparation(mx,my,n,&mmind);
+								S[nsim].wc = wc;
+								S[nsim].mc = mc;
+								S[nsim].wn = wn;
+								S[nsim].mn = mn;
+								S[nsim].het = het;
+								S[nsim].u = u;
+								S[nsim].d = mmind;
+								S[nsim].pnet = mproxnet;
+								S[nsim].pcyt = mproxcyt;
+								S[nsim].mprop = mprop;
+								nsim++;
 							}
+							// compute stats for the given parameterisation:
+							computeStats(S,&Ss,nsims);
+							// for later: chose if the network remains equally heterogeneous throughout, or if we randomly draw heterogeneity of network
+							// bump to output file
+							fprintf(fp,"%.2f,%i,%i,%.2f,%.2f,%.2f,%.3f,%f,%f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mmprop,Ss.vmprop,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
+							fflush(fp);
+							printf("Should print!\n");
+							//}
+							//}
+							//}
+							//}
 						}
 					}
 				}
