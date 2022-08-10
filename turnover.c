@@ -718,7 +718,7 @@ int main(int argc, char *argv[]){
     Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho);
     return(0);
   }else{		
-		sprintf(str,"output-%i.csv",n);
+		sprintf(str,"output-%i-%.2f.csv",n,h);
     fp = fopen(str,"w");
     fprintf(fp,"h,n,nseed,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(nseed=4;nseed<=64;nseed*=4){
