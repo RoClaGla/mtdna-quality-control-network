@@ -1,3 +1,3 @@
 #!/bin/bash
 
-Rscript plot.R output-100-0.50.csv 100
+Rscript plot.R output-100.csv 100
