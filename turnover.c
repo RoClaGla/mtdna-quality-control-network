@@ -718,7 +718,7 @@ int main(int argc, char *argv[]){
     Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho);
     return(0);
   }else{		
-		sprintf(str,"output-%i.csv",n);
+		sprintf(str,"output2-%i.csv",n);
     fp = fopen(str,"w");
     fprintf(fp,"h,n,nseed,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(h=0.1;h<=0.5;h+=0.4){
@@ -726,7 +726,7 @@ int main(int argc, char *argv[]){
 				for(p=0.0;p<=1.0;p+=0.1){
 					for(q=0.0;q<=1.0;q+=0.1){
 						for(halo=0;halo<=0.1;halo+=0.1){
-							for(rho=0.0;rho<=.3;rho+=0.025){
+							for(rho=0.0;rho<=.3;rho+=0.01){
 								//for(K=0;K<15;K+=5){
 								//for(mut_rate=0.0;mut_rate<=0.05;mut_rate+=0.025){
 								//for(to_rate=0.0;to_rate<=0.05;to_rate+=0.025){
