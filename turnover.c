@@ -757,18 +757,13 @@ int main(int argc, char *argv[]){
 								//for(t=0;t<tmax;t++){
 								nsim = 0;
 								while(nsim<nsims){
-									//printf("nsim,nseed,p,q,halo,rho = %i,%i,%.2f,%.2f,%.2f,%.2f\n",nsim,nseed,p,q,halo,rho);
+									printf("nsim,nseed,p,q,halo,rho = %i,%i,%.2f,%.2f,%.2f,%.2f\n",nsim,nseed,p,q,halo,rho);
 									notdoneyet = 1;
 									while(notdoneyet == 1){
-										//printf("New attempt\n");
+										printf("New attempt\n");
 										BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,theta,&nsegs,&actual_mass);
 										notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
 									}
-
-									// turnover according to parameterisation and number of turnover occasions:
-									//Cycle(mx,my,mt,mnetworked,n,t,rho,mut_rate,to_rate);
-									// correlate DNA according to cluster size K
-									//correlateDNA(mx,my,mt,n,K);
 									// get DNA stats
 									getStats(mx,my,mt,mnetworked,n,&wc,&mc,&wn,&mn,&het);
 									getMutantProp(rho,mx,my,mt,n,&mprop);
@@ -792,7 +787,7 @@ int main(int argc, char *argv[]){
 								computeStats(S,&Ss,nsims);
 								// for later: chose if the network remains equally heterogeneous throughout, or if we randomly draw heterogeneity of network
 								// bump to output file
-								fprintf(fp,"%.2f,%i,%i,%.2f,%.2f,%.2f,%.3f,%f,%f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mmprop,Ss.vmprop,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
+								fprintf(fp,"%.2f,%i,%i,%.3f,%.2f,%.2f,%.2f,%.3f,%f,%f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,theta,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mmprop,Ss.vmprop,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
 								fflush(fp);
 								printf("Should print!\n");
 								//}
