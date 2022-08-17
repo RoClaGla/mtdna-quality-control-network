@@ -111,7 +111,7 @@ int Output(double *xs, double *ys, double *xe, double *ye, double *mx, double *m
     fprintf(fp,"%f,%f,%f,%f\n",xs[i],ys[i],xe[i],ye[i]);
   fclose(fp);
   
-  sprintf(str,"mtdna-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.2f.csv",n,nseed,mass,p,q,halo,rho);
+  sprintf(str,"mtdna-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.2f.csv",n,nseed,mass,p,q,halo,rho,theta);
   fp = fopen(str,"w");
   fprintf(fp,"x,y,type\n");
   for(i=0;i<n;i++)
@@ -744,6 +744,7 @@ int main(int argc, char *argv[]){
 		sprintf(str,"output-test-%i.csv",n);
     fp = fopen(str,"w");
     fprintf(fp,"h,n,nseed,theta,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
+		fflush(fp);
     for(h=0.1;h<=0.5;h+=0.4){
 			for(nseed=4;nseed<=64;nseed*=4){
 				for(p=0.0;p<=1.0;p+=0.1){
@@ -756,7 +757,7 @@ int main(int argc, char *argv[]){
 								//for(t=0;t<tmax;t++){
 								nsim = 0;
 								while(nsim<nsims){
-									printf("nsim,nseed,p,q,halo,rho = %i,%i,%.2f,%.2f,%.2f,%.2f\n",nsim,nseed,p,q,halo,rho);
+									//printf("nsim,nseed,p,q,halo,rho = %i,%i,%.2f,%.2f,%.2f,%.2f\n",nsim,nseed,p,q,halo,rho);
 									notdoneyet = 1;
 									while(notdoneyet == 1){
 										//printf("New attempt\n");
@@ -786,7 +787,7 @@ int main(int argc, char *argv[]){
 								computeStats(S,&Ss,nsims);
 								// for later: chose if the network remains equally heterogeneous throughout, or if we randomly draw heterogeneity of network
 								// bump to output file
-								fprintf(fp,"%.2f,%i,%i,%.3f,%.2f,%.2f,%.2f,%.3f,%f,%f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,theta,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mmprop,Ss.vmprop,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
+								fprintf(fp,"%.2f,%i,%i,%.2f,%.2f,%.2f,%.2f,%.3f,%f,%f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,theta,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mmprop,Ss.vmprop,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
 								fflush(fp);
 								printf("Should print!\n");
 								//}
