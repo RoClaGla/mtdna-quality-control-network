@@ -4,7 +4,7 @@ gcc -o3 turnover.c -lm -o turnover.ce
 
 # Parameters: [mode] [nsims] [mass] [seglength] [branchprob] [het] [pop] ([nseed] [halo] [p] [q] [rho] [clustersize])
 # If mode is --snapshots, one must also pass [nseed] [halo] [p] [q] and [rho] [clustersize]
-./turnover.ce --snapshots 1 50 0.01 0.02 100 0.5 4 0.0 1.0 0.0 0.25 25 > tmps1 &
+./turnover.ce --snapshots 1 50 0.01 0.02 100 0.5 4 0.0 1.0 1.0 0.25 25 > tmps1 &
 ./turnover.ce --snapshots 1 50 0.01 0.02 100 0.5 16 0.0 1.0 1.0 0.25 25 > tmps2 &
 ./turnover.ce --snapshots 1 50 0.01 0.02 100 0.5 64 0.0 1.0 1.0 0.0 25 > tmps3 &
 
