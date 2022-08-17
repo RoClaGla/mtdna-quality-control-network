@@ -746,7 +746,7 @@ int main(int argc, char *argv[]){
     fprintf(fp,"h,n,nseed,theta,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
 		fflush(fp);
     for(h=0.1;h<=0.5;h+=0.4){
-			for(theta=PI/4;theta<=PI/3;PI*=(4/3)){
+			for(theta=PI/4;theta<=PI/3;theta*=(4/3)){
 				for(halo=0;halo<=0.1;halo+=0.1){
 					for(nseed=4;nseed<=64;nseed*=4){		
 						for(p=0.0;p<=1.0;p+=0.1){
