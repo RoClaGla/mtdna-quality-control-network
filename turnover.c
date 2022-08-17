@@ -22,7 +22,7 @@ typedef struct{
 } Stats;
 
 // GSL routine for gaussian random number with sd sigma
-double gsl_ran_gaussian(double sigma)
+double gsl_ran_gaussian(const double sigma)
 {
 	double x, y, r2;
 
@@ -175,6 +175,7 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
 						
             total += seglength;
             if(total>mass){
+							printf("Network complete!\n");
               *nsegs = j;
               *actual_mass = total;
               free(thetas);
