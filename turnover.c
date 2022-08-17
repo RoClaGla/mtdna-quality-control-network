@@ -750,7 +750,7 @@ int main(int argc, char *argv[]){
 				for(p=0.0;p<=1.0;p+=0.1){
 					for(q=0.0;q<=1.0;q+=0.1){
 						for(halo=0;halo<=0.1;halo+=0.1){
-							for(rho=0.015;rho<=.3;rho+=0.015){
+							for(rho=0.005;rho<=.35;rho+=0.0345){
 								//for(K=0;K<15;K+=5){
 								//for(mut_rate=0.0;mut_rate<=0.05;mut_rate+=0.025){
 								//for(to_rate=0.0;to_rate<=0.05;to_rate+=0.025){
