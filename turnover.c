@@ -21,6 +21,26 @@ typedef struct{
 	double u, d, het, pnet, pcyt, mprop;
 } Stats;
 
+// GSL routine for gaussian random number with sd sigma
+double gsl_ran_gaussian(const double sigma)
+{
+	double x, y, r2;
+
+	do
+	{
+		/* choose x,y in uniform square (-1,-1) to (+1,+1) */
+
+		x = -1 + 2 * RND;
+		y = -1 + 2 * RND;
+
+		/* see if it is in the unit circle */
+		r2 = x * x + y * y;
+	} while (r2 > 1.0 || r2 == 0);
+
+	/* Box-Muller transform */
+	return sigma * y * sqrt(-2.0 * log(r2) / r2);
+}
+
 // simple function returning max(a,b)
 double mymax(double a, double b)
 {
@@ -165,13 +185,13 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           active[i] = 0;
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = 2*PI*RND;
+          thetas[j] = 2*PI*gsl_ran_gaussian(1);
           active[j] = 1;
           j++;
 
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = 2*PI*RND;
+          thetas[j] = 2*PI*gsl_ran_gaussian(1);
           active[j] = 1;
           
           // increment nactive by 1 (2- 1 net branches are spawned)
