@@ -186,13 +186,13 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           active[i] = 0;
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = theta + gsl_ran_gaussian(0.1);
+          thetas[j] = theta + gsl_ran_gaussian(0.393); // sigma = PI/8
           active[j] = 1;
           j++;
 
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = theta + gsl_ran_gaussian(0.1);
+          thetas[j] = theta + gsl_ran_gaussian(0.393); // sigma = PI/8
           active[j] = 1;
           
           // increment nactive by 1 (2- 1 net branches are spawned)
@@ -716,7 +716,6 @@ int main(int argc, char *argv[]){
   }
 	
 	//tmax = 4;
-	theta = PI/3;
   
   xs = (double *)malloc(sizeof(double)*MAXN);
   ys = (double *)malloc(sizeof(double)*MAXN);
