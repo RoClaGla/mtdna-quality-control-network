@@ -187,13 +187,13 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           active[i] = 0;
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = thetas[i] + theta + gsl_ran_gaussian(0.393); // sigma = PI/8
+          thetas[j] =  2*PI*RND;//thetas[i] + theta + gsl_ran_gaussian(0.393); // sigma = PI/8
           active[j] = 1;
           j++;
 
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = thetas[i] - theta + gsl_ran_gaussian(0.393); // sigma = PI/8
+          thetas[j] = 2*PI*RND;//thetas[i] - theta + gsl_ran_gaussian(0.393); // sigma = PI/8
           active[j] = 1;
           
           // increment nactive by 1 (2- 1 net branches are spawned)
