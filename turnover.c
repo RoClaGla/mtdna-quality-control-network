@@ -153,17 +153,17 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           newx = xe[i] + seglength*cos(thetas[i]);
           newy = ye[i] + seglength*sin(thetas[i]);
           // if out of bounds, or intersects another segment, terminate the branch:
-          //doesintersect = 0;
-          //for(k=0;k<j;k++){
-          //  if(doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k])){
-          //    doesintersect = 1;
-          //  } 
-          //}
+          doesintersect = 0;
+          for(k=0;k<j;k++){
+            if(doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k])){
+              doesintersect = 1;
+            } 
+          }
 					outofbounds = 0;
           if(newx*newx+newy*newy>1){
 						outofbounds = 1;
 					}
-					if(outofbounds == 1){// || doesintersect == 1){
+					if(outofbounds == 1 || doesintersect == 1){
 						nactive--;
             active[i] = 0;
           }else{
