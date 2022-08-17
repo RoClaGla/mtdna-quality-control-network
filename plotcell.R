@@ -40,12 +40,12 @@ makeplot = function(string, rho, titlestr="", tag = "") {
 
 # strings in output filenames follow the format
 # h, nseed, p, q, lambda, halo, perturb
-plot.1 = makeplot("100-4-50-1.00-0.00-0.00-0.25", 0.25, "Small s,\n p=q=0.5,\n repel,\n rho=0.25", "A")
-plot.2 = makeplot("100-4-50-1.00-0.00-0.00-0.25", 0.25, "Small s,\n p=1,q=0,\n no repel\n, rho=0.25", "B")
+plot.1 = makeplot("100-4-50-1.00-1.00-0.00-0.25", 0.25, "Small s,\n p=q=0.5,\n repel,\n rho=0.25", "A")
+plot.2 = makeplot("100-4-50-1.00-1.00-0.10-0.25", 0.25, "Small s,\n p=1,q=0,\n no repel\n, rho=0.25", "B")
 plot.3 = makeplot("100-16-50-1.00-1.00-0.00-0.25", 0.25, "Medium s,\n p=q=0.5,\n repel,\n rho=0.25", "C")
-plot.4 = makeplot("100-16-50-1.00-1.00-0.00-0.25", 0.25, "Medium s,\n p=q=0.5,\n no repel,\n rho=0.25", "B")
+plot.4 = makeplot("100-16-50-1.00-1.00-0.10-0.25", 0.25, "Medium s,\n p=q=0.5,\n no repel,\n rho=0.25", "B")
 plot.5 = makeplot("100-64-50-0.00-0.00-0.00-0.00", 0   , "Large s,\n p=0,q=0,\n no repel,\n rho=0", "C")
-plot.6 = makeplot("100-64-50-1.00-1.00-0.00-0.00", 0.25, "Large s,\n p=q=0.5,\n repel,\n rho=0.25", "D")
+plot.6 = makeplot("100-64-50-1.00-1.00-0.10-0.00", 0.25, "Large s,\n p=q=0.5,\n repel,\n rho=0.25", "D")
 #plot.7 = makeplot("0.50-64-0.50-0.50-0.00-0.00-2", "Large s,\n p=q=0.5", "E")
 #plot.8 = makeplot("0.50-16-1.00-1.00-0.00-0.00-2", "Medium s,\n p=q=1", "F")
 #plot.9 = makeplot("0.50-16-1.00-1.00-0.04-0.00-2", "Medium s,\n p=q=1,\n Medium λ", "G")
