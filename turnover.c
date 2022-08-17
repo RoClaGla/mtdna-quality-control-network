@@ -701,7 +701,7 @@ int main(int argc, char *argv[]){
 			K = atoi(argv[14]);
       printf("Parameters nsims, nseed, target_mass, seglength, branchprob, h, n, halo, p, q: %i, %i, %.f, %.2f, %.2f, %.2f, %i, %.2f, %.2f, %.2f\n", nsims,nseed,target_mass,seglength,branchprob,h,n,halo,p,q);
     }
-    if(argc == 7 && strcmp(argv[1],"--simulate\0")==0){
+    if(argc == 8 && strcmp(argv[1],"--simulate\0")==0){
       // no visual output
       error = 0;
       output = 0;
