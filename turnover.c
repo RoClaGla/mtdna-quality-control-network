@@ -707,6 +707,7 @@ int main(int argc, char *argv[]){
       output = 0;
       printf("Parameters nsims, target_mass, seglength, branchprob, h, n: %i, %.f, %.2f, %.2f, %.2f, %i\n", nsims, target_mass,seglength,branchprob,h,n);
     }
+		fflush(stdout);
   }
   //printf("error = %i\n",error);
   if(error == 1){
@@ -740,7 +741,7 @@ int main(int argc, char *argv[]){
     Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho);
     return(0);
   }else{		
-		sprintf(str,"output2-%i.csv",n);
+		sprintf(str,"output-test-%i.csv",n);
     fp = fopen(str,"w");
     fprintf(fp,"h,n,nseed,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(h=0.1;h<=0.5;h+=0.4){
