@@ -155,7 +155,7 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           // if out of bounds, or intersects another segment, terminate the branch:
           doesintersect = 0;
           for(k=0;k<j;k++){
-						printf("Test for k - %i\n",doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k]));
+						//printf("Test for k - %i\n",doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k]));
             if(doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k])){
               doesintersect = 1;
             } 
@@ -186,13 +186,13 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           active[i] = 0;
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = 2*PI*gsl_ran_gaussian(1);
+          thetas[j] = 2*PI*gsl_ran_gaussian(0.1);
           active[j] = 1;
           j++;
 
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = 2*PI*gsl_ran_gaussian(1);
+          thetas[j] = 2*PI*gsl_ran_gaussian(0.1);
           active[j] = 1;
           
           // increment nactive by 1 (2- 1 net branches are spawned)
