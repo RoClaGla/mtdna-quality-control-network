@@ -160,7 +160,7 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
               doesintersect = 1;
             } 
           }
-					printf("New segment intersects: %i\n",doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k]));
+					printf("New segment intersects: %i\n",doesintersect);
 					outofbounds = 0;
           if(newx*newx+newy*newy>1){
 						outofbounds = 1;
