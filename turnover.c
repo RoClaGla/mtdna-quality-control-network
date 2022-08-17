@@ -22,7 +22,7 @@ typedef struct{
 } Stats;
 
 // GSL routine for gaussian random number with sd sigma
-double gsl_ran_gaussian(const double sigma)
+double gsl_ran_gaussian(double sigma)
 {
 	double x, y, r2;
 
