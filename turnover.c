@@ -164,7 +164,7 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           if(newx*newx+newy*newy>1){
 						outofbounds = 1;
 					}
-					if(outofbounds == 1 || doesintersect == 1){
+					if(outofbounds == 1){// || doesintersect == 1){
 						nactive--;
             active[i] = 0;
           }else{
