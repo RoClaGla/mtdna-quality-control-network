@@ -155,11 +155,12 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           // if out of bounds, or intersects another segment, terminate the branch:
           doesintersect = 0;
           for(k=0;k<j;k++){
-						//printf("Test for k - %i\n",doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k]));
+						
             if(doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k])){
               doesintersect = 1;
             } 
           }
+					printf("New segment intersects: %i\n",doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k]));
 					outofbounds = 0;
           if(newx*newx+newy*newy>1){
 						outofbounds = 1;
