@@ -699,13 +699,13 @@ int main(int argc, char *argv[]){
       q = atof(argv[12]);
       rho = atof(argv[13]);
 			K = atoi(argv[14]);
-      printf("Parameters nsims, nseed, target_mass, seglength, branchprob, h, n, halo, p, q: %i, %i, %.f, %.2f, %.2f, %.2f, %i, %.2f, %.2f, %.2f\n", nsims,nseed,target_mass,seglength,branchprob,h,n,halo,p,q);
+      printf("Parameters nsims, nseed, target_mass, seglength, branchprob, h, n, halo, p, q:\n %i, %i, %.2f, %.0f, %.2f, %.2f, %.2f, %i, %.2f, %.2f, %.2f\n", nsims,nseed,theta,target_mass,seglength,branchprob,h,n,halo,p,q);
     }
     if(argc == 8 && strcmp(argv[1],"--simulate\0")==0){
       // no visual output
       error = 0;
       output = 0;
-      printf("Parameters nsims, target_mass, seglength, branchprob, h, n: %i, %.f, %.2f, %.2f, %.2f, %i\n", nsims, target_mass,seglength,branchprob,h,n);
+      printf("Parameters nsims, target_mass, seglength, branchprob, h, n: %i, %.2f, %.f, %.2f, %.2f, %.2f, %i\n", nsims, theta, target_mass,seglength,branchprob,h,n);
     }
 		fflush(stdout);
   }
@@ -741,7 +741,7 @@ int main(int argc, char *argv[]){
     Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho,theta);
     return(0);
   }else{		
-		sprintf(str,"output-test-%i.csv",n);
+		sprintf(str,"output-%i.csv",n);
     fp = fopen(str,"w");
     fprintf(fp,"h,n,nseed,theta,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
 		fflush(fp);
@@ -750,7 +750,7 @@ int main(int argc, char *argv[]){
 				for(p=0.0;p<=1.0;p+=0.1){
 					for(q=0.0;q<=1.0;q+=0.1){
 						for(halo=0;halo<=0.1;halo+=0.1){
-							for(rho=0.0;rho<=.3;rho+=0.01){
+							for(rho=0.015;rho<=.3;rho+=0.015){
 								//for(K=0;K<15;K+=5){
 								//for(mut_rate=0.0;mut_rate<=0.05;mut_rate+=0.025){
 								//for(to_rate=0.0;to_rate<=0.05;to_rate+=0.025){
