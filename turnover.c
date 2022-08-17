@@ -120,7 +120,7 @@ int Output(double *xs, double *ys, double *xe, double *ye, double *mx, double *m
   return(0);
 }
 
-int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int nseed, double seglength, double branchprob, int *nsegs, double *actual_mass){
+int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int nseed, double seglength, double branchprob, double theta, int *nsegs, double *actual_mass){
   double newx, newy, angle, phaseshift;
   int i,j,k,nactive, doesintersect, outofbounds;
   double total, thism;
@@ -186,13 +186,13 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           active[i] = 0;
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = 2*PI*gsl_ran_gaussian(0.1);
+          thetas[j] = theta + gsl_ran_gaussian(0.1);
           active[j] = 1;
           j++;
 
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = 2*PI*gsl_ran_gaussian(0.1);
+          thetas[j] = theta + gsl_ran_gaussian(0.1);
           active[j] = 1;
           
           // increment nactive by 1 (2- 1 net branches are spawned)
@@ -661,7 +661,7 @@ int computeStats(Stats *s, SumStats *ss, int nsims){
 int main(int argc, char *argv[]){
   double *xs,*xe,*ys,*ye, *mx, *my;
   int *mt, *mnetworked;
-  double rho, h, p, q, seglength, branchprob, halo;
+  double rho, h, p, q, seglength, branchprob, halo, theta;
   double target_mass, actual_mass;
 	double mproxnet, mproxcyt;
 	int wc,mc,wn,mn;
@@ -678,26 +678,27 @@ int main(int argc, char *argv[]){
   
   error = 1;
   printf("argc = %i\n",argc);
-  if(argc == 14 || argc == 7){
+  if(argc == 15 || argc == 8){
     // computational parameters and parameters in common
     nsims = atoi(argv[2]);
     // network parameters
     target_mass = atof(argv[3]);
     seglength = atof(argv[4]);
     branchprob = atof(argv[5]);
+		theta = atof(argv[6]);
     // genetic parameters
-    n = atoi(argv[6]);
-    if(argc == 14 && strcmp(argv[1],"--snapshots\0")==0){
+    n = atoi(argv[7]);
+    if(argc == 15 && strcmp(argv[1],"--snapshots\0")==0){
       // generate snapshot
       error = 0;
       output = 1;
-			h = atof(argv[7]);
-      nseed = atoi(argv[8]);
-      halo = atof(argv[9]);
-      p = atof(argv[10]);
-      q = atof(argv[11]);
-      rho = atof(argv[12]);
-			K = atoi(argv[13]);
+			h = atof(argv[8]);
+      nseed = atoi(argv[9]);
+      halo = atof(argv[10]);
+      p = atof(argv[11]);
+      q = atof(argv[12]);
+      rho = atof(argv[13]);
+			K = atoi(argv[14]);
       printf("Parameters nsims, nseed, target_mass, seglength, branchprob, h, n, halo, p, q: %i, %i, %.f, %.2f, %.2f, %.2f, %i, %.2f, %.2f, %.2f\n", nsims,nseed,target_mass,seglength,branchprob,h,n,halo,p,q);
     }
     if(argc == 7 && strcmp(argv[1],"--simulate\0")==0){
@@ -715,6 +716,7 @@ int main(int argc, char *argv[]){
   }
 	
 	//tmax = 4;
+	theta = PI/3;
   
   xs = (double *)malloc(sizeof(double)*MAXN);
   ys = (double *)malloc(sizeof(double)*MAXN);
@@ -732,7 +734,7 @@ int main(int argc, char *argv[]){
   if(output == 1){
     notdoneyet = 1;
     while(notdoneyet == 1){
-      BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,&nsegs,&actual_mass);
+      BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,theta,&nsegs,&actual_mass);
       notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
     }
 		correlateDNA(mx,my,mt,n,K);
@@ -758,7 +760,7 @@ int main(int argc, char *argv[]){
 									notdoneyet = 1;
 									while(notdoneyet == 1){
 										//printf("New attempt\n");
-										BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,&nsegs,&actual_mass);
+										BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,theta,&nsegs,&actual_mass);
 										notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
 									}
 
