@@ -99,19 +99,19 @@ int doIntersect(double p1x, double p1y, double q1x, double q1y, double p2x, doub
   return 0;
 }
 
-int Output(double *xs, double *ys, double *xe, double *ye, double *mx, double *my, int *mt, int n, int nsegs, int nseed, double mass, double p, double q, double halo, double rho){
+int Output(double *xs, double *ys, double *xe, double *ye, double *mx, double *my, int *mt, int n, int nsegs, int nseed, double mass, double p, double q, double halo, double rho, double theta){
   int i;
   FILE *fp;
   char str[200];
   
-  sprintf(str,"network-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f.csv",n,nseed,mass,p,q,halo,rho);
+  sprintf(str,"network-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.2f.csv",n,nseed,mass,p,q,halo,rho,theta);
   fp = fopen(str,"w");
   fprintf(fp,"xs,ys,xe,ye\n");
   for(i=0;i<nsegs;i++)
     fprintf(fp,"%f,%f,%f,%f\n",xs[i],ys[i],xe[i],ye[i]);
   fclose(fp);
   
-  sprintf(str,"mtdna-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f.csv",n,nseed,mass,p,q,halo,rho);
+  sprintf(str,"mtdna-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.2f.csv",n,nseed,mass,p,q,halo,rho);
   fp = fopen(str,"w");
   fprintf(fp,"x,y,type\n");
   for(i=0;i<n;i++)
@@ -159,7 +159,7 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
               doesintersect = 1;
             } 
           }
-					printf("New segment intersects: %i\n",doesintersect);
+					//printf("New segment intersects: %i\n",doesintersect);
 					outofbounds = 0;
           if(newx*newx+newy*newy>1){
 						outofbounds = 1;
@@ -183,7 +183,6 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           }
         }else{
           // kill the current branch, whose angle is thetas[i], and spawn two branches with new direction
-					printf("Branching!\n");
           active[i] = 0;
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
@@ -739,12 +738,12 @@ int main(int argc, char *argv[]){
       notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
     }
 		correlateDNA(mx,my,mt,n,K);
-    Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho);
+    Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho,theta);
     return(0);
   }else{		
 		sprintf(str,"output-test-%i.csv",n);
     fp = fopen(str,"w");
-    fprintf(fp,"h,n,nseed,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
+    fprintf(fp,"h,n,nseed,theta,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
     for(h=0.1;h<=0.5;h+=0.4){
 			for(nseed=4;nseed<=64;nseed*=4){
 				for(p=0.0;p<=1.0;p+=0.1){
@@ -760,7 +759,7 @@ int main(int argc, char *argv[]){
 									printf("nsim,nseed,p,q,halo,rho = %i,%i,%.2f,%.2f,%.2f,%.2f\n",nsim,nseed,p,q,halo,rho);
 									notdoneyet = 1;
 									while(notdoneyet == 1){
-										printf("New attempt\n");
+										//printf("New attempt\n");
 										BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,theta,&nsegs,&actual_mass);
 										notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
 									}
