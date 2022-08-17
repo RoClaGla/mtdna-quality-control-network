@@ -155,7 +155,6 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           // if out of bounds, or intersects another segment, terminate the branch:
           doesintersect = 0;
           for(k=0;k<j;k++){
-						
             if(doIntersect(xs[i],ys[i],newx,newy,xs[k],ys[k],xe[k],ye[k])){
               doesintersect = 1;
             } 
@@ -175,7 +174,6 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
 						
             total += seglength;
             if(total>mass){
-							printf("Network complete!\n");
               *nsegs = j;
               *actual_mass = total;
               free(thetas);
@@ -185,6 +183,7 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           }
         }else{
           // kill the current branch, whose angle is thetas[i], and spawn two branches with new direction
+					printf("Branching!\n");
           active[i] = 0;
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
