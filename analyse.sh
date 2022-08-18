@@ -2,4 +2,4 @@
 
 Rscript plotcell.R
 
-Rscript plot.R output-100.csv 100
+Rscript plot.R output2-100.csv 100
