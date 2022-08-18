@@ -99,19 +99,19 @@ int doIntersect(double p1x, double p1y, double q1x, double q1y, double p2x, doub
   return 0;
 }
 
-int Output(double *xs, double *ys, double *xe, double *ye, double *mx, double *my, int *mt, int n, int nsegs, int nseed, double mass, double p, double q, double halo, double rho, double theta){
+int Output(double *xs, double *ys, double *xe, double *ye, double *mx, double *my, int *mt, int n, int nsegs, int nseed, double mass, double p, double q, double halo, double rho, double theta, double sigma){
   int i;
   FILE *fp;
   char str[200];
   
-  sprintf(str,"network-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.2f.csv",n,nseed,mass,p,q,halo,rho,theta);
+  sprintf(str,"network-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.3f-%.3f.csv",n,nseed,mass,p,q,halo,rho,theta,sigma);
   fp = fopen(str,"w");
   fprintf(fp,"xs,ys,xe,ye\n");
   for(i=0;i<nsegs;i++)
     fprintf(fp,"%f,%f,%f,%f\n",xs[i],ys[i],xe[i],ye[i]);
   fclose(fp);
   
-  sprintf(str,"mtdna-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.2f.csv",n,nseed,mass,p,q,halo,rho,theta);
+  sprintf(str,"mtdna-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.3f-%.3f.csv",n,nseed,mass,p,q,halo,rho,theta,sigma);
   fp = fopen(str,"w");
   fprintf(fp,"x,y,type\n");
   for(i=0;i<n;i++)
@@ -120,7 +120,7 @@ int Output(double *xs, double *ys, double *xe, double *ye, double *mx, double *m
   return(0);
 }
 
-int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int nseed, double seglength, double branchprob, double theta, int *nsegs, double *actual_mass){
+int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int nseed, double seglength, double branchprob, double theta, double sigma, int *nsegs, double *actual_mass){
   double newx, newy, angle, phaseshift;
   int i,j,k,nactive, doesintersect, outofbounds;
   double total, thism;
@@ -186,13 +186,13 @@ int BuildNetwork(double *xs,double *ys,double *xe,double *ye, double mass, int n
           active[i] = 0;
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] =  thetas[i] + theta + gsl_ran_gaussian(0.393); // sigma = PI/8
+          thetas[j] =  thetas[i] + theta + gsl_ran_gaussian(sigma); // sigma = PI/8
           active[j] = 1;
           j++;
 
           xs[j] = xe[j] = xe[i];
           ys[j] = ye[j] = ye[i];
-          thetas[j] = thetas[i] - theta + gsl_ran_gaussian(0.393); // sigma = PI/8
+          thetas[j] = thetas[i] - theta + gsl_ran_gaussian(sigma); // sigma = PI/8
           active[j] = 1;
           
           // increment nactive by 1 (2- 1 net branches are spawned)
@@ -661,7 +661,7 @@ int computeStats(Stats *s, SumStats *ss, int nsims){
 int main(int argc, char *argv[]){
   double *xs,*xe,*ys,*ye, *mx, *my;
   int *mt, *mnetworked;
-  double rho, h, p, q, seglength, branchprob, halo, theta;
+  double rho, h, p, q, seglength, branchprob, halo, theta, sigma;
   double target_mass, actual_mass;
 	double mproxnet, mproxcyt;
 	int wc,mc,wn,mn;
@@ -678,7 +678,7 @@ int main(int argc, char *argv[]){
   
   error = 1;
   printf("argc = %i\n",argc);
-  if(argc == 15 || argc == 7){
+  if(argc == 15 || argc == 8){
     // computational parameters and parameters in common
     nsims = atoi(argv[2]);
     // network parameters
@@ -687,11 +687,11 @@ int main(int argc, char *argv[]){
     branchprob = atof(argv[5]);
     // genetic parameters
     n = atoi(argv[6]);
+		theta = atof(argv[7]);
     if(argc == 15 && strcmp(argv[1],"--snapshots\0")==0){
       // generate snapshot
       error = 0;
-      output = 1;	
-			theta = atof(argv[7]);
+      output = 1;
 			h = atof(argv[8]);
       nseed = atoi(argv[9]);
       halo = atof(argv[10]);
@@ -701,7 +701,7 @@ int main(int argc, char *argv[]){
 			K = atoi(argv[14]);
       printf("Parameters nsims, nseed, target_mass, seglength, branchprob, h, n, halo, p, q:\n %i, %i, %.2f, %.0f, %.2f, %.2f, %.2f, %i, %.2f, %.2f, %.2f\n", nsims,nseed,theta,target_mass,seglength,branchprob,h,n,halo,p,q);
     }
-    if(argc == 7 && strcmp(argv[1],"--simulate\0")==0){
+    if(argc == 8 && strcmp(argv[1],"--simulate\0")==0){
       // no visual output
       error = 0;
       output = 0;
@@ -734,19 +734,19 @@ int main(int argc, char *argv[]){
   if(output == 1){
     notdoneyet = 1;
     while(notdoneyet == 1){
-      BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,theta,&nsegs,&actual_mass);
+      BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,theta,sigma,&nsegs,&actual_mass);
       notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
     }
 		correlateDNA(mx,my,mt,n,K);
-    Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho,theta);
+    Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho,theta,sigma);
     return(0);
   }else{		
-		sprintf(str,"output-%i.csv",n);
+		sprintf(str,"output-%.3f-%i.csv",theta,n);
     fp = fopen(str,"w");
-    fprintf(fp,"h,n,nseed,theta,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
+    fprintf(fp,"h,n,nseed,sigma,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
 		fflush(fp);
     for(h=0.1;h<=0.5;h+=0.4){
-			for(theta=PI/4;theta<=PI/3;theta*=(4/3)){
+			for(sigma=PI/4;sigma>=PI/8;sigma-=PI/16){
 				for(halo=0;halo<=0.1;halo+=0.1){
 					for(nseed=4;nseed<=64;nseed*=4){		
 						for(p=0.0;p<=1.0;p+=0.1){
@@ -762,7 +762,7 @@ int main(int argc, char *argv[]){
 										notdoneyet = 1;
 										while(notdoneyet == 1){
 											//printf("New attempt\n");
-											BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,theta,&nsegs,&actual_mass);
+											BuildNetwork(xs,ys,xe,ye,target_mass,nseed,seglength,branchprob,theta,sigma,&nsegs,&actual_mass);
 											notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
 										}
 										// get DNA stats
@@ -788,7 +788,7 @@ int main(int argc, char *argv[]){
 									computeStats(S,&Ss,nsims);
 									// for later: chose if the network remains equally heterogeneous throughout, or if we randomly draw heterogeneity of network
 									// bump to output file
-									fprintf(fp,"%.2f,%i,%i,%.2f,%.2f,%.2f,%.2f,%.3f,%f,%f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,theta,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mmprop,Ss.vmprop,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
+									fprintf(fp,"%.2f,%i,%i,%.2f,%.2f,%.2f,%.2f,%.3f,%f,%f,%f,%f,%f,%f,%f,%.2e,%f,%.2e,%f,%.2e,%f,%.2e,%f,%f,%f,%f,%f,%f\n",h,n,nseed,sigma,p,q,halo,rho,Ss.mpnet,Ss.mpcyt,Ss.vpnet,Ss.vpcyt,Ss.mmprop,Ss.vmprop,Ss.mwc,Ss.vwc,Ss.mmc,Ss.vmc,Ss.mwn,Ss.vwn,Ss.mmn,Ss.vmn,Ss.mh,Ss.vh,Ss.mu,Ss.vu,Ss.md,Ss.vd);
 									fflush(fp);
 									printf("Should print!\n");
 									//}
