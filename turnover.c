@@ -99,19 +99,19 @@ int doIntersect(double p1x, double p1y, double q1x, double q1y, double p2x, doub
   return 0;
 }
 
-int Output(double *xs, double *ys, double *xe, double *ye, double *mx, double *my, int *mt, int n, int nsegs, int nseed, double mass, double p, double q, double halo, double rho, double theta, double sigma){
+int Output(double *xs, double *ys, double *xe, double *ye, double *mx, double *my, int *mt, int n, int nsegs, int nseed, double p, double q, double halo, double rho, double theta, double sigma){
   int i;
   FILE *fp;
   char str[200];
   
-  sprintf(str,"network-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.3f-%.3f.csv",n,nseed,mass,p,q,halo,rho,theta,sigma);
+  sprintf(str,"network-%i-%i-%.2f-%.2f-%.2f-%.2f-%.3f-%.3f.csv",n,nseed,p,q,halo,rho,theta,sigma);
   fp = fopen(str,"w");
   fprintf(fp,"xs,ys,xe,ye\n");
   for(i=0;i<nsegs;i++)
     fprintf(fp,"%f,%f,%f,%f\n",xs[i],ys[i],xe[i],ye[i]);
   fclose(fp);
   
-  sprintf(str,"mtdna-%i-%i-%.f-%.2f-%.2f-%.2f-%.2f-%.3f-%.3f.csv",n,nseed,mass,p,q,halo,rho,theta,sigma);
+  sprintf(str,"mtdna-%i-%i-%.2f-%.2f-%.2f-%.2f-%.3f-%.3f.csv",n,nseed,p,q,halo,rho,theta,sigma);
   fp = fopen(str,"w");
   fprintf(fp,"x,y,type\n");
   for(i=0;i<n;i++)
@@ -738,7 +738,7 @@ int main(int argc, char *argv[]){
       notdoneyet = PlaceDNA(xs,ys,xe,ye,mx,my,mt,mnetworked,n,h,p,q,nsegs,halo);
     }
 		correlateDNA(mx,my,mt,n,K);
-    Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho,theta,sigma);
+    Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,p,q,halo,rho,theta,sigma);
     return(0);
   }else{		
 		sprintf(str,"output-%i-%.3f-%i-%.2f.csv",nseed,theta,n,h);
