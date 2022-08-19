@@ -741,7 +741,7 @@ int main(int argc, char *argv[]){
     Output(xs,ys,xe,ye,mx,my,mt,n,nsegs,nseed,target_mass,p,q,halo,rho,theta,sigma);
     return(0);
   }else{		
-		sprintf(str,"output-%.3f-%i-%.2f.csv",theta,n,h);
+		sprintf(str,"output-%i-%.3f-%i-%.2f.csv",nseed,theta,n,h);
     fp = fopen(str,"w");
     fprintf(fp,"h,n,nseed,sigma,p,q,halo,rho,mpnet,mpcyt,vpnet,vpcyt,mmprop,vmprop,mwc,vwc,mmc,vmc,mwn,vwn,mmn,vmn,mh,vh,mu,vu,md,vd\n");
 		fflush(fp);
