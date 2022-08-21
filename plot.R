@@ -74,18 +74,15 @@ vhest = function(p, q, h, n, pc, alpha, beta){
 
 df = read.csv(inputfile, header = T)
 
-plot.df.1 = df[df$p==1   & df$q==0  ,]
-plot.df.2 = df[df$p==0.5 & df$q==0.5,]
-plot.df.3 = df[df$p==0   & df$q==0  ,]
+plot.df.1 = df[df$p==1   & df$q==1  ,]
+plot.df.2 = df[df$p==0   & df$q==0  ,]
 
 plot.df.1$vhprime = plot.df.1$vh/(plot.df.1$mh*(1-plot.df.1$mh))
 plot.df.2$vhprime = plot.df.2$vh/(plot.df.2$mh*(1-plot.df.2$mh))
-plot.df.3$vhprime = plot.df.3$vh/(plot.df.3$mh*(1-plot.df.3$mh))
 
 p1 = ggplot()+
 	geom_line(data = plot.df.1, aes(x = rho, y = mmprop, col = as.factor(nseed)))+
-	geom_line(data = plot.df.2, aes(x = rho, y = mmprop, col = as.factor(nseed)), linetype = "dashed")+
-	geom_line(data = plot.df.3, aes(x = rho, y = mmprop, col = as.factor(nseed)), linetype = "dotted")+
+	geom_line(data = plot.df.2, aes(x = rho, y = mmprop, col = as.factor(nseed)), linetype = "dotted")+
 	facet_grid(h~halo)
 
 filename = paste("mmprop-v-rho",".png", sep = "")
@@ -96,13 +93,12 @@ dev.off()
 
 # heat map showing value of mmprop compared to cytoplasmic distribution (i.e., for mmprop when p = q = 0 for a given rho)
 RHO <- unique(df$rho)
-plot.df.1 <- df[df$rho == RHO[3] & df$h == 0.1,]
 
-
-
-filename = paste("mmprop-fixed-rho-",toString(RHO[3]),".png",sep = "")
-png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
-ggplot(data = plot.df.1)+
-	geom_tile(aes(x = p,y = q,fill = mmprop))+
-	facet_grid(halo~sigma)
-dev.off()
+for(i in 1:length(RHO){
+	plot.df.1 <- df[df$rho == RHO[i] & df$h == 0.1,]
+	filename = paste("mmprop-fixed-rho-",toString(RHO[i]),".png",sep = "")
+	png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
+	ggplot(data = plot.df.1)+
+		geom_tile(aes(x = p,y = q,fill = mmprop))+
+		facet_grid(halo~sigma)
+	dev.off()
