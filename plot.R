@@ -100,7 +100,7 @@ plot.df.1 <- df[df$rho == RHO[3] & df$h == 0.1,]
 
 
 
-filename = paste("",".png")
+filename = paste("mmprop-fixed-rho-",toString(RHO[3]),".png")
 png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
 ggplot(data = plot.df.1)+
 	geom_tile(aes(x = p,y = q,fill = mmprop))+
