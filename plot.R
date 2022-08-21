@@ -94,12 +94,38 @@ dev.off()
 # heat map showing value of mmprop compared to cytoplasmic distribution (i.e., for mmprop when p = q = 0 for a given rho)
 RHO <- unique(df$rho)
 
-for(i in 1:length(RHO)){
-	plot.df.1 <- df[df$rho == RHO[i] & df$h == 0.1,]
-	filename = paste("mmprop-fixed-rho-",toString(RHO[i]),".png",sep = "")
-	png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
-	ggplot(data = plot.df.1)+
-		geom_tile(aes(x = p,y = q,fill = mmprop))+
-		facet_grid(halo~sigma)
-	dev.off()
-}
+plot.df.1 <- df[df$rho == RHO[1] & df$h == 0.1,]
+filename = paste("mmprop-fixed-rho-",toString(RHO[1]),".png",sep = "")
+png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
+ggplot(data = plot.df.1)+
+	geom_tile(aes(x = p,y = q,fill = mmprop))+
+	facet_grid(halo~sigma)
+dev.off()
+plot.df.1 <- df[df$rho == RHO[3] & df$h == 0.1,]
+filename = paste("mmprop-fixed-rho-",toString(RHO[3]),".png",sep = "")
+png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
+ggplot(data = plot.df.1)+
+	geom_tile(aes(x = p,y = q,fill = mmprop))+
+	facet_grid(halo~sigma)
+dev.off()
+plot.df.1 <- df[df$rho == RHO[5] & df$h == 0.1,]
+filename = paste("mmprop-fixed-rho-",toString(RHO[5]),".png",sep = "")
+png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
+ggplot(data = plot.df.1)+
+	geom_tile(aes(x = p,y = q,fill = mmprop))+
+	facet_grid(halo~sigma)
+dev.off()
+plot.df.1 <- df[df$rho == RHO[10] & df$h == 0.1,]
+filename = paste("mmprop-fixed-rho-",toString(RHO[10]),".png",sep = "")
+png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
+ggplot(data = plot.df.1)+
+	geom_tile(aes(x = p,y = q,fill = mmprop))+
+	facet_grid(halo~sigma)
+dev.off()
+plot.df.1 <- df[df$rho == RHO[12] & df$h == 0.1,]
+filename = paste("mmprop-fixed-rho-",toString(RHO[12]),".png",sep = "")
+png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
+ggplot(data = plot.df.1)+
+	geom_tile(aes(x = p,y = q,fill = mmprop))+
+	facet_grid(halo~sigma)
+dev.off()
