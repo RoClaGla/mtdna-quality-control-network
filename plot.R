@@ -102,3 +102,4 @@ for(i in 1:length(RHO){
 		geom_tile(aes(x = p,y = q,fill = mmprop))+
 		facet_grid(halo~sigma)
 	dev.off()
+}
