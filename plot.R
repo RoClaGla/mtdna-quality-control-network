@@ -94,7 +94,7 @@ dev.off()
 # heat map showing value of mmprop compared to cytoplasmic distribution (i.e., for mmprop when p = q = 0 for a given rho)
 RHO <- unique(df$rho)
 
-for(i in 1:length(RHO){
+for(i in 1:length(RHO)){
 	plot.df.1 <- df[df$rho == RHO[i] & df$h == 0.1,]
 	filename = paste("mmprop-fixed-rho-",toString(RHO[i]),".png",sep = "")
 	png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
