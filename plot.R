@@ -88,8 +88,21 @@ p1 = ggplot()+
 	geom_line(data = plot.df.3, aes(x = rho, y = mmprop, col = as.factor(nseed)), linetype = "dotted")+
 	facet_grid(h~halo)
 
-filename = paste("mmprop",".png")
+filename = paste("mmprop-v-rho",".png")
 res.factor = 3
 png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
 p1
+dev.off()
+
+# heat map showing value of mmprop compared to cytoplasmic distribution (i.e., for mmprop when p = q = 0 for a given rho)
+RHO <- unique(df$rho)
+plot.df.1 <- df[df$rho == RHO[3] & df$h == 0.1,]
+
+
+
+filename = paste("",".png")
+png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
+ggplot(data = plot.df.1)+
+	geom_tile(aes(x = p,y = q,fill = mmprop))+
+	facet_grid(halo~sigma)
 dev.off()
