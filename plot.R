@@ -88,7 +88,7 @@ p1 = ggplot()+
 	geom_line(data = plot.df.3, aes(x = rho, y = mmprop, col = as.factor(nseed)), linetype = "dotted")+
 	facet_grid(h~halo)
 
-filename = paste("mmprop-v-rho",".png")
+filename = paste("mmprop-v-rho",".png", sep = "")
 res.factor = 3
 png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
 p1
@@ -100,7 +100,7 @@ plot.df.1 <- df[df$rho == RHO[3] & df$h == 0.1,]
 
 
 
-filename = paste("mmprop-fixed-rho-",toString(RHO[3]),".png")
+filename = paste("mmprop-fixed-rho-",toString(RHO[3]),".png",sep = "")
 png(filename,height = 1200*res.factor,width=1200*res.factor,res=72*res.factor)
 ggplot(data = plot.df.1)+
 	geom_tile(aes(x = p,y = q,fill = mmprop))+
